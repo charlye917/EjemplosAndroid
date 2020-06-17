@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">EncryptedSharedPreferences</string>
+    <string name="initialize_header">Initialize/Open</string>
+    <string name="initialize_switch">Encrypted SharedPreferences</string>
+    <string name="save_header">Save text</string>
+    <string name="save">Save</string>
+    <string name="read_header">Read text</string>
+    <string name="read">Read</string>
+    <string name="timestamp">done in %1$dms</string>
+    <string name="raw_file_content">Raw file content</string>
+    <string name="menu_about">About</string>
+    <string name="about_github">https://github.com/akaita/encryptedsharedpreferences-example</string>
+    <string name="about_medium">https://medium.com/@akaita</string>
+    <string name="about_akaita">Made for you by Akaita (akaita@4rtstudio.com)</string>
+
+
+    <string name="shared_preferences">Shared Preferences</string>
+    <string name="files">Files</string>
+    <string name="enter_any_value">Enter any value</string>
+    <string name="read_file">Read File (stored normally)</string>
+    <string name="read_file_encrypted">Read File (stored with JetSec)</string>
+    <string name="save_file">Save File</string>
+    <string name="show_content">Show encrypted content</string>
+    <string name="save_file_encrypted">Save File (JetSec)</string>
+    <string name="save_encrypted">Save (JetSec)</string>
+    <string name="stored_values">Stored values :</string>
+    <string name="file_saved">File saved!</string>
+    <string name="result">Result :</string>
+    <string name="value_x">Value (stored normally) : %s</string>
+    <string name="value_jetpack_x">Value (stored with JetSec) : %s</string>
+    <string name="file_not_found">File not found</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
