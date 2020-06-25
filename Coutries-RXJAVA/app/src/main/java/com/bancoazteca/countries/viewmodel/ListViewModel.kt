@@ -1,7 +1,9 @@
 package com.bancoazteca.countries.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bancoazteca.countries.di.DaggerApiComponent
 import com.bancoazteca.countries.module.CountriesService
 import com.bancoazteca.countries.module.Country
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -9,10 +11,17 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class ListViewModel: ViewModel(){
 
-    private val countriesService = CountriesService()
+    @Inject
+    lateinit var countriesService:CountriesService
+
+    init {
+        DaggerApiComponent.create().inject(this)
+    }
+
     private val disposable = CompositeDisposable()
 
     val countries = MutableLiveData<List<Country>>()
@@ -34,13 +43,14 @@ class ListViewModel: ViewModel(){
                         countries.value = value
                         countryLoadError.value = false
                         loading.value = false
+
+                        Log.d("__test",value.toString())
                     }
 
                     override fun onError(e: Throwable?) {
                         countryLoadError.value = true
                         loading.value = false
                     }
-
                 })
         )
     }

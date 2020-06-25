@@ -20,11 +20,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        
         viewModel.refresh()
         countriesList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = countriesAdapter
+        }
+
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = false
+            viewModel.refresh()
         }
 
         observerViewModel()
@@ -32,11 +37,16 @@ class MainActivity : AppCompatActivity() {
 
     fun observerViewModel(){
         viewModel.countries.observe(this, Observer { countries ->
-            countries?.let{ countriesAdapter.updateCountry(it) }
+            countries?.let{
+                countriesList.visibility = View.VISIBLE
+                countriesAdapter.updateCountry(it)
+            }
         })
 
         viewModel.countryLoadError.observe(this, Observer { isError ->
-            isError?.let { list_error.visibility = if(it) View.VISIBLE else View.GONE }
+            isError?.let {
+                list_error.visibility = if(it) View.VISIBLE else View.GONE
+            }
         })
 
         viewModel.loading.observe(this, Observer { isLoading ->
