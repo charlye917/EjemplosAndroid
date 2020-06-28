@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
+import kotlin.system.measureTimeMillis
 
-class MainActivity : AppCompatActivity() {
+class
+CoroutinesBasicActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -17,7 +19,9 @@ class MainActivity : AppCompatActivity() {
             //dispatcher()
             //lauch()
             //exampleJob()
-            asyncAwait()
+            //asyncAwait()
+            //asyncAwaitDeferred()
+            println(measureTimeMillis { withContextIO() }).toString()
             Toast.makeText(this,"Prueba mensaje",Toast.LENGTH_SHORT).show()
         }
     }
@@ -105,9 +109,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     //async cuando deseamos ejecutar algo y deseamos esperar resultado
-    fun asyncAwait() = runBlocking{
+    fun asyncAwait() = runBlocking {
         println(System.currentTimeMillis().toString())
-        async { calculateHard() }.await()
-        async { calculateHard() }.await()
+        val num1: Int = async { calculateHard() }.await()
+        println(System.currentTimeMillis().toString())
+        val num2:Int = async { calculateHard() }.await()
+        println(System.currentTimeMillis().toString())
+        val resultado = num1 + num2
+        println(resultado)
+    }
+
+    //Deferred futuro cancelable sin bloqueos, la forma de obtener su valor es atravez de un await
+    fun asyncAwaitDeferred() = runBlocking{
+        println(System.currentTimeMillis().toString())
+        val numero1 = async { calculateHard() }
+        println(System.currentTimeMillis().toString())
+        val numero2 = async { calculateHard() }
+        println(System.currentTimeMillis().toString())
+        val result: Int = numero1.await() + numero2.await()//hasta aqui empeiza a espera el resutlado
+        println(result.toString())
+    }
+
+    //otra forma de ver asyncAwait
+    fun withContextIO() = runBlocking {
+        val num1 = withContext(Dispatchers.IO){calculateHard()}
+        val num2= withContext(Dispatchers.IO){calculateHard()}
+        val res = num1 + num2
+        println(res)
+    }
+
+    fun cancelCoroutine(){
+        runBlocking {
+            val job = launch {
+                repeat(1000){
+                    println("job $it")
+                    delay(500L)
+                }
+            }
+            delay(1400)
+            job.cancel()
+            println("main: cansado de esperar")
+        }
     }
 }
