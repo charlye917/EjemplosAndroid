@@ -1,15 +1,11 @@
-package com.bancoazteca.dogsjetpack.view
+package com.charlye934.jetpackdogs.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import com.charlye934.jetpackdogs.R
-import com.charlye934.jetpackdogs.view.DetailFragmentArgs
-import kotlinx.android.synthetic.main.fragment_detail.*
-import kotlinx.android.synthetic.main.fragment_list.*
 
 
 class DetailFragment : Fragment() {

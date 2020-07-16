@@ -1,4 +1,4 @@
-package com.bancoazteca.dogsjetpack.view
+package com.charlye934.jetpackdogs.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
