@@ -13,7 +13,7 @@ import com.bancoazteca.dogsjetpack.viewmodel.ListViewModel
 
 class ListFragment : Fragment() {
 
-    //private var viewModel: ListViewModel by activityViewModels()
+    private var viewModel: ListViewModel by activityViewModels()
     private var dogsListAdapter = DoglistAdapter(arrayListOf())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
