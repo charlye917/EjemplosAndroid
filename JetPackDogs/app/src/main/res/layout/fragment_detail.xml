@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.DetailFragment">
+
+    <ImageView
+        android:id="@+id/imgDogDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:minHeight="200dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_dog" />
+
+    <TextView
+        android:id="@+id/txtDogNameDetail"
+        style="@style/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgDogDetail"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dp"
+        android:text="Dog Name" />
+
+    <TextView
+        android:id="@+id/txtDogPurposeDetail"
+        style="@style/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtDogNameDetail"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dp"
+        android:text="Dog Name" />
+
+    <TextView
+        android:id="@+id/txtDogTemplerament"
+        style="@style/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtDogPurposeDetail"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dp"
+        android:text="Dog Templerament" />
+
+    <TextView
+        android:id="@+id/txtDogLifeSpan"
+        style="@style/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtDogTemplerament"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dp"
+        android:text="Dog LifeSpan" />
+</RelativeLayout>
