@@ -7,6 +7,8 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.charlye934.jetpackdogs.R
 import com.charlye934.jetpackdogs.model.DogBreed
+import com.charlye934.jetpackdogs.utils.getProgressDrawable
+import com.charlye934.jetpackdogs.utils.loadImages
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 import kotlinx.android.synthetic.main.item_dog.view.*
 
@@ -27,12 +29,17 @@ class DoglistAdapter(val dogsList:ArrayList<DogBreed>) : RecyclerView.Adapter<Do
     override fun getItemCount() = dogsList.size
 
     override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
-        holder.view.txtName.text = dogsList[position].dogBreed
-        holder.view.txtlifeSpan.text = dogsList[position].lifeSpan.toString()
+        holder.name.text = dogsList[position].dogBreed
+        holder.lifeSpan.text = dogsList[position].lifeSpan.toString()
         holder.view.setOnClickListener {
             Navigation.findNavController(it).navigate(ListFragmentDogDirections.actionListFragmentDog2ActionDetailFragment())
         }
+        holder.imgDog.loadImages(dogsList[position].imageUrl, getProgressDrawable(holder.imgDog.context))
     }
 
-    class DogViewHolder(var view: View) : RecyclerView.ViewHolder(view)
+    class DogViewHolder(var view: View) : RecyclerView.ViewHolder(view){
+        val name = view.txtName
+        val lifeSpan = view.txtlifeSpan
+        var imgDog = view.imgItem
+    }
 }
