@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity
-data class  DogBreed(
+data class DogBreed(
 
     @ColumnInfo(name = "breed_id")
     @SerializedName("id")

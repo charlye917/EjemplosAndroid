@@ -1,6 +1,8 @@
 package com.charlye934.jetpackdogs.viewmodel
 
 import android.app.Application
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.MainThread
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +20,7 @@ import kotlinx.coroutines.launch
 class ListViewModel(application: Application) : BaseViewModel(application){
 
     private var prefHelper = SharedPreferencesHelper(getApplication())
+    private var refreshTime =  5 * 60 *1000 * 1000 * 1000L
 
     private val dogsService = DogsApiService()
     private val disposible = CompositeDisposable()
@@ -28,6 +31,25 @@ class ListViewModel(application: Application) : BaseViewModel(application){
     val loading = MutableLiveData<Boolean>()
 
     fun refresh(){
+        val updateTime = prefHelper.getUpdateTime()
+        if(updateTime != null && updateTime != 0L && System.nanoTime() - updateTime < refreshTime){
+            fetcFromDatabase()
+        }else{
+            fetchFromRemote()
+        }
+        fetchFromRemote()
+    }
+
+    private fun fetcFromDatabase(){
+        loading.value = true
+        launch {
+            val dogs = DogDatabase(getApplication()).dogDao().getAllDogs()
+            dogRetrieved(dogs)
+            Toast.makeText(getApplication(), "Dogs retrive from database", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun refreshBypassCache(){
         fetchFromRemote()
     }
 
@@ -40,6 +62,7 @@ class ListViewModel(application: Application) : BaseViewModel(application){
                 .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>(){
                     override fun onSuccess(dogList: List<DogBreed>) {
                         storeDogsLocally(dogList)
+                        Log.d("DOGLIST", dogList.toString())
                     }
 
                     override fun onError(e: Throwable) {
@@ -69,7 +92,7 @@ class ListViewModel(application: Application) : BaseViewModel(application){
             }
             dogRetrieved(list)
         }
-        //prefHelper.saveUpdateTime(System.nanoTime())
+        prefHelper.saveUpdateTime(System.nanoTime())
     }
 
 
