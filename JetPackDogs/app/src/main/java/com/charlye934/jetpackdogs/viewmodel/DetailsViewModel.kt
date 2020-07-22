@@ -17,6 +17,5 @@ class DetailsViewModel(application: Application) : BaseViewModel(application){
             dogLiveData.value = dog
         }
 
-
     }
 }
