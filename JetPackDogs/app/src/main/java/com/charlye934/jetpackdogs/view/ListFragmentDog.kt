@@ -1,12 +1,11 @@
 package com.charlye934.jetpackdogs.view
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.charlye934.jetpackdogs.R
 import com.charlye934.jetpackdogs.viewmodel.ListViewModel
@@ -22,6 +21,7 @@ class ListFragmentDog : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_list_dog, container, false)
     }
 
@@ -69,5 +69,19 @@ class ListFragmentDog : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.actionSettings -> {
+                view?.let{Navigation.findNavController(it).navigate(ListFragmentDogDirections.actionSettings()) }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
