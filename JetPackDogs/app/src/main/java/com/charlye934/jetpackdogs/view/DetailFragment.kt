@@ -48,11 +48,13 @@ class DetailFragment : Fragment() {
         viewModel.dogLiveData.observe(viewLifecycleOwner, Observer { dog ->
             dog?.let {
                 dataBinding.dog = dog
-                it.imageUrl?.let {
-                    setupBacgroundColor(it)
+
+                it.imageUrl?.let {url ->
+                    setupBacgroundColor(url)
+                }
                 }
             }
-        })
+        )
     }
 
     private fun setupBacgroundColor(url:String){
@@ -60,9 +62,7 @@ class DetailFragment : Fragment() {
             .asBitmap()
             .load(url)
             .into(object : CustomTarget<Bitmap>(){
-                override fun onLoadCleared(placeholder: Drawable?) {
-
-                }
+                override fun onLoadCleared(placeholder: Drawable?) {}
 
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     Palette.from(resource)
@@ -72,7 +72,6 @@ class DetailFragment : Fragment() {
                             dataBinding.palette = myPalette
                         }
                 }
-
             })
     }
 }

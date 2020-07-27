@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.charlye934.jetpackdogs.model.DogBreed
 import com.charlye934.jetpackdogs.model.DogDatabase
 import com.charlye934.jetpackdogs.model.DogsApiService
+import com.charlye934.jetpackdogs.utils.NotificationHelper
 import com.charlye934.jetpackdogs.utils.SharedPreferencesHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -33,14 +34,14 @@ class ListViewModel(application: Application) : BaseViewModel(application){
     fun refresh(){
         val updateTime = prefHelper.getUpdateTime()
         if(updateTime != null && updateTime != 0L && System.nanoTime() - updateTime < refreshTime){
-            fetcFromDatabase()
+            fetchFromDatabase()
         }else{
             fetchFromRemote()
         }
         fetchFromRemote()
     }
 
-    private fun fetcFromDatabase(){
+    private fun fetchFromDatabase(){
         loading.value = true
         launch {
             val dogs = DogDatabase(getApplication()).dogDao().getAllDogs()
@@ -62,7 +63,8 @@ class ListViewModel(application: Application) : BaseViewModel(application){
                 .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>(){
                     override fun onSuccess(dogList: List<DogBreed>) {
                         storeDogsLocally(dogList)
-                        Log.d("DOGLIST", dogList.toString())
+                        Toast.makeText(getApplication(),"Dogs retrieved from endpoint", Toast.LENGTH_SHORT).show()
+                        NotificationHelper(getApplication()).createNotification()
                     }
 
                     override fun onError(e: Throwable) {
