@@ -46,5 +46,5 @@ data class DogPalette(
 data class SmsInfo(
     var to: String,
     var text:String,
-    var imageUrl:String
+    var imageUrl:String?
 )
