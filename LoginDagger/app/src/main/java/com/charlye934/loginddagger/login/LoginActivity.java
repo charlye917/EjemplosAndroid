@@ -1,4 +1,4 @@
-package com.charlye934.loginddagger;
+package com.charlye934.loginddagger.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.charlye934.loginddagger.R;
+import com.charlye934.loginddagger.root.App;
+
+public class LoginActivity extends AppCompatActivity {
 
     EditText firstName, lastName;
     Button loginButton;
@@ -17,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ((App) getApplication()).getComponent().inject(this);
 
         firstName = findViewById(R.id.etFirstName);
         lastName = findViewById(R.id.etLastName);
