@@ -1,12 +1,12 @@
 package com.charlye934.loginddagger.login;
 
-public interface LoginAcvityMVP {
+public interface LoginActivityMVP {
 
     interface View{
         String getFirstName();
         String getLastName();
 
-        void shwoUserNotAvaible();
+        void showUserNotAvaible();
         void showInputError();
         void showUserSaved();
 
@@ -15,16 +15,13 @@ public interface LoginAcvityMVP {
     }
 
     interface  Presenter{
-        void setView(LoginAcvityMVP.View view);
-
+        void setView(LoginActivityMVP.View view);
         void loginButtonClicked();
-
         void getCurrentUser();
     }
 
     interface Model{
         void createUser(String firstName, String lastName);
-
         User getUser();
     }
 }

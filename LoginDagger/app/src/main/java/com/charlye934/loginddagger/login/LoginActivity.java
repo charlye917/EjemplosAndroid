@@ -11,7 +11,12 @@ import android.widget.Toast;
 import com.charlye934.loginddagger.R;
 import com.charlye934.loginddagger.root.App;
 
-public class LoginActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+public class LoginActivity extends AppCompatActivity implements  LoginActivityMVP.View{
+
+    @Inject
+    LoginActivityMVP.Presenter presenter;
 
     EditText firstName, lastName;
     Button loginButton;
@@ -30,9 +35,51 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Prueba",Toast.LENGTH_SHORT).show();
+                presenter.loginButtonClicked();
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.setView(this);
+        presenter.getCurrentUser();
+    }
+
+    @Override
+    public String getFirstName() {
+        return this.firstName.getText().toString();
+    }
+
+    @Override
+    public String getLastName() {
+        return this.lastName.getText().toString();
+    }
+
+    @Override
+    public void showUserNotAvaible() {
+        Toast.makeText(this,"Error el usuario no esta disponible",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showInputError() {
+        Toast.makeText(this,"Error el nombre y apellido pueden estar vacio",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showUserSaved() {
+        Toast.makeText(this,"Usuario guardado correctamente",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setFirstName(String firstName) {
+        this.firstName.setText(firstName);
+    }
+
+    @Override
+    public void setLasNmae(String lastName) {
+        this.lastName.setText(lastName);
     }
 }

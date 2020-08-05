@@ -1,6 +1,6 @@
 package com.charlye934.loginddagger.login;
 
 public interface LoginRepository {
-    void saveUser();
+    void saveUser(User user);
     User getUser();
 }
