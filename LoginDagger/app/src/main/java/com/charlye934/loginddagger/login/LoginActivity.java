@@ -9,14 +9,26 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.charlye934.loginddagger.R;
+import com.charlye934.loginddagger.http.TwitchAPI;
+import com.charlye934.loginddagger.http.twitch.Game;
+import com.charlye934.loginddagger.http.twitch.Twitch;
 import com.charlye934.loginddagger.root.App;
 
+import java.util.List;
+
 import javax.inject.Inject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements  LoginActivityMVP.View{
 
     @Inject
     LoginActivityMVP.Presenter presenter;
+
+    @Inject
+    TwitchAPI twitchAPI;
 
     EditText firstName, lastName;
     Button loginButton;
@@ -36,6 +48,24 @@ public class LoginActivity extends AppCompatActivity implements  LoginActivityMV
             @Override
             public void onClick(View view) {
                 presenter.loginButtonClicked();
+            }
+        });
+
+        //EJEMPLO USO TWITCH CON RETROFIT
+        Call<Twitch> call = twitchAPI.getTopGames("lejipm1mqporigkqljiipi5zuqby2m");
+
+        call.enqueue(new Callback<Twitch>() {
+            @Override
+            public void onResponse(Call<Twitch> call, Response<Twitch> response) {
+                List<Game> topGames = response.body().getGame();
+                for(Game game : topGames){
+                    System.out.println(game.getName());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Twitch> call, Throwable t) {
+                t.printStackTrace();
             }
         });
 
