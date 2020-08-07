@@ -3,6 +3,7 @@ package com.charlye934.loginddagger.login;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,12 +11,9 @@ import android.widget.Toast;
 
 import com.charlye934.loginddagger.R;
 import com.charlye934.loginddagger.http.TwitchAPI;
-import com.charlye934.loginddagger.http.twitch.Game;
-import com.charlye934.loginddagger.http.twitch.Twitch;
+import com.charlye934.loginddagger.http.pojo.Top;
+import com.charlye934.loginddagger.http.pojo.Twitch;
 import com.charlye934.loginddagger.root.App;
-
-import java.util.List;
-
 import javax.inject.Inject;
 
 import retrofit2.Call;
@@ -57,10 +55,10 @@ public class LoginActivity extends AppCompatActivity implements  LoginActivityMV
         call.enqueue(new Callback<Twitch>() {
             @Override
             public void onResponse(Call<Twitch> call, Response<Twitch> response) {
-                List<Game> topGames = response.body().getGame();
-                for(Game game : topGames){
-                    System.out.println(game.getName());
+                for(Top topGames : response.body().getTop()){
+                    Log.d("GAMES", topGames.toString());
                 }
+
             }
 
             @Override

@@ -1,6 +1,6 @@
 package com.charlye934.loginddagger.login
 
-class User(
+data class User(
         var firstName: String,
         var lastName: String
 ) {

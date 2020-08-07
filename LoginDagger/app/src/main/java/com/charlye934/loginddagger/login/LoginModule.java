@@ -17,7 +17,7 @@ public class LoginModule {
 
     @Provides
     public LoginRepository provideLoginRepository(){
-        return new  MemoryRepository();
+        return new MemoryRepository();
     }
 
 }
