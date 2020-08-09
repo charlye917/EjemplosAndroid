@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.charlye934.loginddagger">
+
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -13,8 +14,10 @@
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme"
-        tools:targetApi="n">
-        <activity android:name=".login.LoginActivity">
+        tools:ignore="AllowBackup,UnusedAttribute">
+
+        <activity android:name=".login.LoginActivity"
+            tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
