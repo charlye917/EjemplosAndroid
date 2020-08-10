@@ -7,8 +7,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.charlye934.loginddagger.R
 import com.charlye934.loginddagger.http.TwitchAPI
+import com.charlye934.loginddagger.http.pojo.Game
+import com.charlye934.loginddagger.http.pojo.Top
 import com.charlye934.loginddagger.http.pojo.Twitch
 import com.charlye934.loginddagger.root.App
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableSource
+import io.reactivex.rxjava3.functions.Function
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Response
 import javax.inject.Inject
@@ -27,11 +32,16 @@ class LoginActivity : AppCompatActivity(), LoginActivityMVP.View {
         setContentView(R.layout.activity_main)
 
         (application as App).getComponet().inject(this)
+        callRetrofit()
 
         btnLogin.setOnClickListener {
             presenter.loginButtonClicked()
         }
 
+
+    }
+
+    private fun callRetrofit(){
         val call:retrofit2.Call<Twitch> = twitchApi.getTopGames("lejipm1mqporigkqljiipi5zuqby2m")
         call.enqueue(object : retrofit2.Callback<Twitch>{
             override fun onFailure(call: retrofit2.Call<Twitch>, t: Throwable) {
@@ -45,6 +55,17 @@ class LoginActivity : AppCompatActivity(), LoginActivityMVP.View {
             }
 
         })
+    }
+
+    private fun callRxJava(){
+        twitchApi.getTopGamesObservable("lejipm1mqporigkqljiipi5zuqby2m")
+                    .flatMap(object : Function<Twitch, ObservableSource<Top>>{
+
+                    override fun apply(t: Twitch?): ObservableSource<Top> {
+                        return Observable.fromIterable(t!!.top)
+                    }
+                }).flatMap()
+
     }
 
     override var getFirstName: String = "Carlos"
