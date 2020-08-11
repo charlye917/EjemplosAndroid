@@ -1,23 +1,25 @@
 package com.charlye934.loginddagger.login
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.telecom.Call
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.charlye934.loginddagger.R
 import com.charlye934.loginddagger.http.TwitchAPI
-import com.charlye934.loginddagger.http.pojo.Game
 import com.charlye934.loginddagger.http.pojo.Top
 import com.charlye934.loginddagger.http.pojo.Twitch
-import com.charlye934.loginddagger.root.App
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableSource
-import io.reactivex.rxjava3.functions.Function
+import com.charlye934.loginddagger.root.AppDagger
+import io.reactivex.Observable
+import io.reactivex.ObservableSource
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Function
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Response
 import javax.inject.Inject
-import javax.security.auth.callback.Callback
 
 class LoginActivity : AppCompatActivity(), LoginActivityMVP.View {
     
@@ -31,13 +33,13 @@ class LoginActivity : AppCompatActivity(), LoginActivityMVP.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        (application as App).getComponet().inject(this)
-        callRetrofit()
+        (application as AppDagger).getComponet().inject(this)
+        //callRetrofit()
+        callRxJava()
 
         btnLogin.setOnClickListener {
             presenter.loginButtonClicked()
         }
-
 
     }
 
@@ -53,19 +55,41 @@ class LoginActivity : AppCompatActivity(), LoginActivityMVP.View {
                     Log.d("GAMES", it.toString())
                 }
             }
-
         })
     }
 
+    @SuppressLint("CheckResult")
     private fun callRxJava(){
         twitchApi.getTopGamesObservable("lejipm1mqporigkqljiipi5zuqby2m")
-                    .flatMap(object : Function<Twitch, ObservableSource<Top>>{
-
-                    override fun apply(t: Twitch?): ObservableSource<Top> {
+                .flatMap(object : Function<Twitch,ObservableSource<Top>>{
+                    override fun apply(t: Twitch): ObservableSource<Top> {
                         return Observable.fromIterable(t!!.top)
                     }
-                }).flatMap()
+                }).flatMap(object : Function<Top,Observable<String>>{
+                    override fun apply(t: Top): Observable<String> {
+                        return Observable.just(t.game.name)
+                    }
+                }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<String>{
+                    override fun onComplete() {
+                        Log.d("RXOnComplete","oncomplete")
+                    }
 
+                    override fun onSubscribe(d: Disposable) {
+                        Log.d("RXSubscribe",d.toString())
+
+                    }
+
+                    override fun onNext(t: String) {
+                        Log.d("RXOnNext",t)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                    }
+
+                })
     }
 
     override var getFirstName: String = "Carlos"
