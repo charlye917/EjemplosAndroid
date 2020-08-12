@@ -3,7 +3,7 @@ package com.charlye934.loginddagger.root
 import android.app.Application
 import com.charlye934.loginddagger.login.LoginModule
 
-class AppDagger() : Application(){
+class App() : Application(){
     lateinit var component: ApplicationComponent
 
     override fun onCreate() {

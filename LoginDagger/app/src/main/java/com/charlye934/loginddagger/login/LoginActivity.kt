@@ -9,7 +9,7 @@ import com.charlye934.loginddagger.R
 import com.charlye934.loginddagger.http.TwitchAPI
 import com.charlye934.loginddagger.http.pojo.Top
 import com.charlye934.loginddagger.http.pojo.Twitch
-import com.charlye934.loginddagger.root.AppDagger
+import com.charlye934.loginddagger.root.App
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.Observer
@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity(), LoginActivityMVP.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        (application as AppDagger).getComponet().inject(this)
+        (application as App).getComponet().inject(this)
         //callRetrofit()
         callRxJava()
 
@@ -69,7 +69,10 @@ class LoginActivity : AppCompatActivity(), LoginActivityMVP.View {
                     override fun apply(t: Top): Observable<String> {
                         return Observable.just(t.game.name)
                     }
-                }).subscribeOn(Schedulers.io())
+                }).filter{
+                    it.startsWith("F")
+                }
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<String>{
                     override fun onComplete() {
