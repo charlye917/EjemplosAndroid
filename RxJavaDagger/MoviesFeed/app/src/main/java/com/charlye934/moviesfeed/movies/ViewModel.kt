@@ -1,4 +1,6 @@
 package com.charlye934.moviesfeed.movies
 
-class ViewModel {
-}
+data class ViewModel(
+    val nameMovie:String,
+    val countryMovie:String
+)
