@@ -1,6 +1,7 @@
 package com.charlye934.moviesfeed.movies
 
-import android.database.Observable
+import io.reactivex.rxjava3.core.Observable
+
 
 interface MoviesMVP {
 

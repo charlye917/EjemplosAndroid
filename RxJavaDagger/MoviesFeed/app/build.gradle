@@ -4,8 +4,10 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.1"
+    //noinspection GradleCompatible
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    kapt.includeCompileClasspath = false
 
     defaultConfig {
         applicationId "com.charlye934.moviesfeed"
@@ -36,7 +38,7 @@ android {
 ext{
     supportLibraryVersion = "1.1.0"
     retrofitVersion = "2.9.0"
-    daggerVersion = "2.28.3"
+    daggerVersion = "2.24"
     rxJavaVersion = "3.0.0"
 }
 
@@ -67,8 +69,8 @@ dependencies {
 
     //Dagger
     implementation "com.google.dagger:dagger:$daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
     //RxJava
     implementation "io.reactivex.rxjava3:rxandroid:$rxJavaVersion"
