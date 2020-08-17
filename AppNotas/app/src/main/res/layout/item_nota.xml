@@ -32,7 +32,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/tvTitleLogin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_star_border_black_24dp"/>
+            android:src="@drawable/ic_star_border_black_24dp"
+            tools:ignore="UnknownIdInLayout" />
 
         <TextView
             android:id="@+id/tvContenidoNota"
