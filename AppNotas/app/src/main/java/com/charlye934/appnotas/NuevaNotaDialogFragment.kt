@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.RadioGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -17,10 +18,6 @@ class NuevaNotaDialogFragment : DialogFragment() {
 
     private val notaViewModel:NuevaNotaDialogViewModel by viewModels()
     private var view = null
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_nueva_nota_dialog, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,11 +29,17 @@ class NuevaNotaDialogFragment : DialogFragment() {
         builder.setTitle("Nueva nota")
             .setMessage("Introduzca los datos de la nueva app")
             .setPositiveButton("Guardar", DialogInterface.OnClickListener{ dialog, id ->
-                when(radioGroupColor.checkedRadioButtonId){
-                    R.id.radioButtonColorRojo -> {}
-                    R.id.radioButtonColorVerde -> {}
-                }
+
+                var titulo = editTextTitulo.text.toString()
+                var contenido = editTextContenido.text.toString()
                 var esFavorita = switchNotaFavorita.isChecked
+                var color = "azul"
+
+                when(radioGroupColor.checkedRadioButtonId){
+                    R.id.radioButtonColorRojo -> {color = "rojo"}
+                    R.id.radioButtonColorVerde -> { color = "verde"}
+                    R.id.radioButtonColorAzul -> { color = "azul"}
+                }
             })
             .setNegativeButton("Cancelar", DialogInterface.OnClickListener{ dialog, id -> })
 
