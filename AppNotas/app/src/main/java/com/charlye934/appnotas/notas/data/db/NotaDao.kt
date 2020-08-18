@@ -1,13 +1,12 @@
-package com.charlye934.appnotas.notas.data.model
+package com.charlye934.appnotas.notas.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import kotlinx.android.parcel.IgnoredOnParcel
 
 @Dao
 interface NotaDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(nota:NotaEntity)
+    fun insert(nota: NotaEntity)
 
     @Update
     fun update(nota: NotaEntity)

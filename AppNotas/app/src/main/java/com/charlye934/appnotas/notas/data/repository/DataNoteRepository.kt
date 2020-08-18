@@ -1,9 +1,10 @@
 package com.charlye934.appnotas.notas.data.repository
 
-import com.charlye934.appnotas.notas.data.model.NotaDao
-import com.charlye934.appnotas.notas.data.model.NotaEntity
+import androidx.lifecycle.LiveData
+import com.charlye934.appnotas.notas.data.db.NotaEntity
 
 interface DataNoteRepository {
-    fun getDataDB():List<NotaEntity>
-    fun setData(nota:NotaEntity)
+    suspend fun getAll(): LiveData<List<NotaEntity>>
+    suspend fun getAllFavs(): LiveData<List<NotaEntity>>
+    suspend fun insert(nota: NotaEntity)
 }

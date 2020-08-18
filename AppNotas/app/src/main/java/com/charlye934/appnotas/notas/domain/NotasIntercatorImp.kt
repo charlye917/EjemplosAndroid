@@ -1,6 +1,6 @@
 package com.charlye934.appnotas.notas.domain
 
-import com.charlye934.appnotas.notas.data.model.NotaEntity
+import com.charlye934.appnotas.notas.data.db.NotaEntity
 import com.charlye934.appnotas.notas.data.repository.DataNoteRepository
 import com.charlye934.appnotas.notas.data.repository.DataNoteRepositoryImp
 

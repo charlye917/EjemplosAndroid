@@ -1,4 +1,4 @@
-package com.charlye934.appnotas.notas.data.model
+package com.charlye934.appnotas.notas.data.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

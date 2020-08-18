@@ -1,19 +1,28 @@
 package com.charlye934.appnotas.notas.data.repository
 
-import com.charlye934.appNotaEntitys.NotaEntitys.data.db.DataNotesDBImp
-import com.charlye934.appnotas.notas.data.db.DataNotesDB
-import com.charlye934.appnotas.notas.data.model.NotaDao
-import com.charlye934.appnotas.notas.data.model.NotaEntity
+import android.content.Context
+import android.os.AsyncTask
+import androidx.lifecycle.LiveData
+import com.charlye934.appnotas.notas.data.db.NotaDao
+import com.charlye934.appnotas.notas.data.db.NotaEntity
+import com.charlye934.appnotas.notas.data.db.NotaRoomDatabase
 
-class DataNoteRepositoryImp : DataNoteRepository {
+class DataNoteRepositoryImp(context: Context) : DataNoteRepository {
 
-    private val dataNotesDb: DataNotesDB = DataNotesDBImp()
+    private val db: NotaRoomDatabase? = NotaRoomDatabase.getDataBase(context)
+    private val notaDao = db!!.notaDao()
+    private val allNotas = notaDao.getAll()
+    private val allNotasFavoritas = notaDao.getAllFavorte()
 
-    override fun getDataDB(): List<NotaEntity> {
-        return dataNotesDb.getData()
+    override suspend fun getAll(): LiveData<List<NotaEntity>> {
+        return allNotas
     }
 
-    override fun setData(nota: NotaEntity) {
+    override suspend fun getAllFavs(): LiveData<List<NotaEntity>> {
+        return allNotasFavoritas
+    }
 
+    override suspend fun insert(nota: NotaEntity) {
+        notaDao.insert(nota)
     }
 }

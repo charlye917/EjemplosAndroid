@@ -1,4 +1,4 @@
-package com.charlye934.appnotas.notas.data.model
+package com.charlye934.appnotas.notas.data.db
 
 import android.content.Context
 import androidx.room.Database
@@ -11,7 +11,7 @@ abstract class NotaRoomDatabase : RoomDatabase() {
 
     companion object{
         private var INSTANCE: NotaRoomDatabase? = null
-        fun getData(context: Context): NotaRoomDatabase? {
+        fun getDataBase(context: Context): NotaRoomDatabase? {
             if (INSTANCE == null) {
                 synchronized(NotaRoomDatabase::class.java) {
                     if (INSTANCE == null) {

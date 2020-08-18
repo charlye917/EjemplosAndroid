@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.charlye934.appnotas.R
-import com.charlye934.appnotas.notas.data.model.NotaEntity
+import com.charlye934.appnotas.notas.data.db.NotaEntity
 import com.charlye934.appnotas.notas.presentation.viewmodel.NotasViewModel
 import kotlinx.android.synthetic.main.item_nota.view.*
 
