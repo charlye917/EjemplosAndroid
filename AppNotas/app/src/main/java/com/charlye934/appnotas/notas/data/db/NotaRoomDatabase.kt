@@ -17,7 +17,8 @@ abstract class NotaRoomDatabase : RoomDatabase() {
                     if (INSTANCE == null) {
                         INSTANCE = Room.databaseBuilder(
                             context.applicationContext,
-                            NotaRoomDatabase::class.java, "notas_database"
+                            NotaRoomDatabase::class.java,
+                            "notas_database"
                         ).build()
                     }
                 }

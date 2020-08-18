@@ -2,15 +2,18 @@ package com.charlye934.appnotas.notas.presentation.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.charlye934.appnotas.R
 import com.charlye934.appnotas.notas.presentation.listener.NotasListener
+import com.charlye934.appnotas.notas.presentation.viewmodel.NuevaNotaDialogViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_notas.*
 
 class DashboardActivity : AppCompatActivity(), NotasListener {
 
     private val tagNotaFragment = NotaFragment.TAG
+    private val notaViewModel: NuevaNotaDialogViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

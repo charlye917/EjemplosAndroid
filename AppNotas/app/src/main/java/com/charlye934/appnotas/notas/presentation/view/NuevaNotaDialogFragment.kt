@@ -1,22 +1,21 @@
-package com.charlye934.appnotas
+package com.charlye934.appnotas.notas.presentation.view
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.RadioGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.charlye934.appnotas.R
+import com.charlye934.appnotas.notas.data.db.NotaEntity
+import com.charlye934.appnotas.notas.presentation.viewmodel.NuevaNotaDialogViewModel
 import kotlinx.android.synthetic.main.fragment_nueva_nota_dialog.*
 
 class NuevaNotaDialogFragment : DialogFragment() {
 
-    private val notaViewModel:NuevaNotaDialogViewModel by viewModels()
+    private val notaViewModel: NuevaNotaDialogViewModel by activityViewModels()
     private var view = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,8 +39,12 @@ class NuevaNotaDialogFragment : DialogFragment() {
                     R.id.radioButtonColorVerde -> { color = "verde"}
                     R.id.radioButtonColorAzul -> { color = "azul"}
                 }
+                notaViewModel.insertNota(NotaEntity(titulo, contenido, esFavorita, color))
+                dialog.dismiss()
             })
-            .setNegativeButton("Cancelar", DialogInterface.OnClickListener{ dialog, id -> })
+            .setNegativeButton("Cancelar", DialogInterface.OnClickListener{ dialog, id ->
+                dialog.dismiss()
+            })
 
         val inflater = activity?.layoutInflater
 

@@ -2,25 +2,26 @@ package com.charlye934.appnotas.notas.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import io.reactivex.Completable
 
 @Dao
 interface NotaDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(nota: NotaEntity)
+    suspend fun insert(nota: NotaEntity)
 
     @Update
-    fun update(nota: NotaEntity)
+    suspend fun update(nota: NotaEntity)
 
     @Query("DELETE FROM notas")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Query("DELETE FROM notas WHERE id = :idNota")
-    fun deleteById(idNota: Int)
+    suspend fun deleteById(idNota: Int)
 
     @Query("SELECT * FROM notas ORDER BY titulo ASC")
-    fun getAll(): LiveData<List<NotaEntity>>
+    suspend fun getAll(): List<NotaEntity>
 
     @Query("SELECT * FROM notas WHERE favorito LIKE 'true'")
-    fun getAllFavorte(): LiveData<List<NotaEntity>>
+    suspend fun getAllFavorite(): List<NotaEntity>
 
 }

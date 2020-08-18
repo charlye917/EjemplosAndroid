@@ -8,7 +8,7 @@ data class NotaEntity(
     val titulo:String?,
     val contenido:String?,
     val favorito:Boolean,
-    val color: Int
+    val color: String
 ){
     @PrimaryKey(autoGenerate = true)
     val id:Int = 0

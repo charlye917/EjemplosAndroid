@@ -1,30 +1,25 @@
 package com.charlye934.appnotas.notas.domain
 
+import android.app.Application
 import com.charlye934.appnotas.notas.data.db.NotaEntity
 import com.charlye934.appnotas.notas.data.repository.DataNoteRepository
 import com.charlye934.appnotas.notas.data.repository.DataNoteRepositoryImp
 
-class NotasIntercatorImp : NotasInteractor {
+class NotasIntercatorImp(application: Application) : NotasInteractor {
 
-    private val notasRepository: DataNoteRepository = DataNoteRepositoryImp()
+    private val notasRepository: DataNoteRepository = DataNoteRepositoryImp(application)
 
-    override fun editNotaClick(nota: NotaEntity) {
-
+    override suspend fun getAllNotes(): List<NotaEntity> {
+        return notasRepository.getAll()
     }
 
-    override fun eliminaNota(nota: NotaEntity) {
-
+    override suspend fun getAllFavoriteNotes(): List<NotaEntity> {
+        return notasRepository.getAllFavs()
     }
 
-    override fun favoritaNota(nota: NotaEntity) {
-
+    override suspend fun insert(nota: NotaEntity) {
+       notasRepository.insert(nota)
     }
 
-    override fun setData(nota: NotaEntity) {
 
-    }
-
-    override fun getData(): List<NotaEntity> {
-        return notasRepository.getDataDB()
-    }
 }

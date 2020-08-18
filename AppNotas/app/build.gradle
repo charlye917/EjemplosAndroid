@@ -55,7 +55,9 @@ dependencies {
     //Libraries for viewmodel and livedata management
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$viewmodel_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$viewmodel_version"
     implementation "androidx.fragment:fragment-ktx:1.2.5"
+
 
     //ROOM
     implementation "androidx.room:room-runtime:$room_version"
