@@ -5,7 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.charlye934.popcorn.R
+import com.charlye934.popcorn.common.Constantes
 import com.charlye934.popcorn.retrofit.model.Movie
 import kotlinx.android.synthetic.main.item_movie_list.view.*
 
@@ -27,6 +30,12 @@ class MovieRecyclerViewAdapter: RecyclerView.Adapter<MovieRecyclerViewAdapter.Mo
         val item = movies[position]
         holder.tvTitle.text = item.title
         holder.tvRating.text = item.vote_average.toString()
+
+        holder.ivPhoto.load(Constantes.IMAGE_BASE_URL + item.poster_path){
+            crossfade(true)
+            placeholder(R.drawable.ic_cine)
+            transformations(CircleCropTransformation())
+        }
 
         with(holder.view){
             tag = item

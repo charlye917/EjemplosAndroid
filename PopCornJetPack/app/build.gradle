@@ -61,4 +61,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:$retrofitVersion"){
         exclude module: 'okhttp'
     }
+
+    // Coil image library
+    implementation("io.coil-kt:coil:0.12.0")
 }

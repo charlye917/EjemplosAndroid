@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_movies"
-        android:name="com.charlye934.popcorn.ui.home.HomeFragment"
+        android:name="com.charlye934.popcorn.ui.movies.MovieListFragment"
         android:label="@string/title_movies"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_movie_list" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
