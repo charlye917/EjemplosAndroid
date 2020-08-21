@@ -1,11 +1,14 @@
 package com.charlye934.mapscustome
 
+import android.content.pm.PackageManager
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -13,18 +16,25 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import java.util.*
+import java.util.jar.Manifest
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
+    private lateinit var custome:CustomeMaps
+    private val REQUEST_LOCATION_PERMISSION = 1
+    private val latitude = 19.2970994
+    private val longitude = -99.1867883
+    private val homeLatLng = LatLng(latitude, longitude)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        custome = CustomeMaps(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -58,11 +68,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+        val androidOverlay= custome.androidOverlay(homeLatLng)
+
         map = googleMap
-        myHome(map)
-        setMapLongClick(map)
-        setPoiClick(map)
-        setMapStyle(map)
+        enableMyLocation()
+        custome.myHome(homeLatLng, map)
+        custome.setMapLongClick(map)
+        custome.setPoiClick(map)
+        custome.setMapStyle(map)
+
+        map.addGroundOverlay(androidOverlay)
 
         //map = googleMap
         //val sydney = LatLng(19.2970994, -99.1867883)
@@ -70,75 +85,38 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         //map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
-    //zoom in my home and add a marker
-    private fun myHome(map: GoogleMap){
-        val latitude = 19.2970994
-        val longitude = -99.1867883
-        val homeLatLng = LatLng(latitude, longitude)
-        /*Type zoom
-        1: World
-        5: Landmass/continent
-        10: City
-        15: Streets
-        20: Buildings*/
-        val zoomLevel = 15f
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(homeLatLng, zoomLevel))
-        map.addMarker(MarkerOptions().position(homeLatLng))
-
+    private fun isPermissionGranted(): Boolean{
+        return ContextCompat.checkSelfPermission(
+            this,
+            android.Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
-    //Marker a locaiton
-    private fun setMapLongClick(map:GoogleMap){
-        map.setOnMapClickListener { latLng ->
-            //Add a info window for the marker
-            val snippet = String.format(
-                Locale.getDefault(),
-                "Lat: %1$.5f, Long: %2$.5f",
-                latLng.latitude,
-                latLng.longitude
-            )
-
-            map.addMarker(
-                MarkerOptions()
-                    .position(latLng)
-                    .title(getString(R.string.dropped_pin))
-                    .snippet(snippet)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+    private fun enableMyLocation(){
+        if(isPermissionGranted()){
+            map.isMyLocationEnabled = true
+        }else{
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf<String>(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_LOCATION_PERMISSION
             )
         }
     }
 
-    //Show a title place
-    private fun setPoiClick(map: GoogleMap){
-        map.setOnPoiClickListener { poi ->
-            val poiMarker = map.addMarker(
-                MarkerOptions()
-                    .position(poi.latLng)
-                    .title(poi.name)
-            )
-
-            poiMarker.showInfoWindow()
-        }
-    }
-
-    private fun setMapStyle(map: GoogleMap){
-        try{
-            val success = map.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                    this,
-                    R.raw.map_style
-                )
-            )
-
-            if(!success){
-                Log.e(TAG, "Style parsiong failed")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if(requestCode == REQUEST_LOCATION_PERMISSION){
+            if(grantResults.contains(PackageManager.PERMISSION_GRANTED)){
+                enableMyLocation()
             }
-        }catch(e: Resources.NotFoundException){
-            Log.e(TAG, "Can't find style. Error", e)
         }
     }
 
     companion object{
-        private val TAG = MapsActivity::class.java.simpleName
+        val TAG = MapsActivity::class.java.simpleName
     }
 }
