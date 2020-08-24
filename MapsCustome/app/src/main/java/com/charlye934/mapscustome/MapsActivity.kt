@@ -1,5 +1,6 @@
 package com.charlye934.mapscustome
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
@@ -78,6 +79,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         custome.setMapStyle(map)
 
         map.addGroundOverlay(androidOverlay)
+        map.isTrafficEnabled = true
 
         //map = googleMap
         //val sydney = LatLng(19.2970994, -99.1867883)
@@ -92,6 +94,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
+    @SuppressLint("MissingPermission")
     private fun enableMyLocation(){
         if(isPermissionGranted()){
             map.isMyLocationEnabled = true
