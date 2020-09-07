@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.CharacterDetailFragment">
+
+    <ProgressBar
+        android:id="@+id/progresBarCharacterDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="gone"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCharacterDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgCharacterDetail"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvNameCharacterDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="TextView: "
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgCharacterDetail" />
+
+        <TextView
+            android:id="@+id/tvSpeciesTextCharacterDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Species"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvNameCharacterDetail" />
+
+        <TextView
+            android:id="@+id/tvSpeciesCharacterDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="60dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvNameCharacterDetail"/>
+
+        <TextView
+            android:id="@+id/etStatusTextCharacterDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="10dp"
+            android:text="Status:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSpeciesTextCharacterDetail" />
+
+        <TextView
+            android:id="@+id/etStatusCharacterDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="60dp"
+            tools:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSpeciesCharacterDetail" />
+
+        <TextView
+            android:id="@+id/etGenderTextCharacterDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="10dp"
+            android:text="Gender:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etStatusTextCharacterDetail"
+             />
+
+        <TextView
+            android:id="@+id/etGenderCharacterDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="60dp"
+            tools:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etStatusCharacterDetail" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
