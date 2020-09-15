@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devtides.androidcoroutinesretrofit.R
 import com.devtides.androidcoroutinesretrofit.model.Country
 import kotlinx.android.synthetic.main.item_country.view.*
+import java.util.*
 
-class CountryListAdapter(var countries: ArrayList<Country>): RecyclerView.Adapter<CountryListAdapter.CountryViewHolder>() {
+class CountryListAdapter(private val countries: ArrayList<Country>): RecyclerView.Adapter<CountryListAdapter.CountryViewHolder>() {
 
     fun updateCountries(newCountries: List<Country>) {
         countries.clear()
