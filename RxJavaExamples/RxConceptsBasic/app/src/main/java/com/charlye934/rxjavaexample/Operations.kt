@@ -1,5 +1,6 @@
 package com.charlye934.rxjavaexample
 
+import android.annotation.SuppressLint
 import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -91,4 +92,20 @@ class Operations {
 
         observable.subscribe(observer)
     }
+
+    @SuppressLint("CheckResult")
+    fun rangeOperator(){
+        Observable.range(1,16)
+            ?.subscribe(
+                {
+                    Log.d(MainActivity.TAG, "onNext: $it")
+                },
+                {
+                    Log.d(MainActivity.TAG, "onError: $it")
+                },{
+                    Log.d(MainActivity.TAG, "onComplete")
+                }
+            )
+    }
+
 }
