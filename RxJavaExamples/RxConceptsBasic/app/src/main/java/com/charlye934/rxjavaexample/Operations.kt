@@ -5,7 +5,9 @@ import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import java.lang.Exception
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class Operations {
 
@@ -107,5 +109,63 @@ class Operations {
                 }
             )
     }
+
+    @SuppressLint("CheckResult")
+    fun repeatOperator(){
+        Observable.range(1, 10).repeat(2)
+        .subscribe(
+            {
+                Log.d(MainActivity.TAG, "Oncomplete: $it")
+            },
+            {
+                Log.d(MainActivity.TAG, "onError: $it")
+            },{
+                Log.d(MainActivity.TAG, "onComplete")
+            })
+    }
+
+    /*
+    * Interval create an Observable that emits a sequence of integers spaced by a given
+    * time interval
+    * http://reactivex.io/documentation/operators/interval.html
+    * */
+    fun intervalOperator(): Observable<Long>{
+        return Observable.interval(2, TimeUnit.SECONDS)
+            .takeWhile { value ->
+                value <= 10
+            }
+    }
+
+    /*
+    * Create an observable that emits a particular item after a given delay
+    * http://reactivex.io/documentation/operators/timer.html
+    * */
+    fun timerOperator(): Observable<Long>? {
+        return Observable.timer(5, TimeUnit.SECONDS)
+    }
+
+    /*
+    * Crear un observable desde cero mediante una funcion
+    * http://reactivex.io/documentation/operators/create.html
+    * */
+    fun createOperator(): Observable<Int>{
+        return  Observable.create {
+            try {
+                for(i in mList){
+                    it.onNext(i * 5)
+                }
+
+                it.onComplete()
+            }catch (e: Exception){
+                it.onError(e)
+            }
+        }
+    }
+
+    fun filterOperator(): Observable<User>{
+        return Observable.fromIterable(m)
+    }
+
+
 
 }
