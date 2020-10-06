@@ -21,6 +21,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        operation.createOperator()
+            .subscribe(
+                {
+                    Log.d(MainActivity.TAG, "Oncomplete: $it")
+                    //getLocation()
+                },
+                {
+                    Log.d(MainActivity.TAG, "onError: $it")
+                },{
+                    Log.d(MainActivity.TAG, "onComplete")
+                })
+    }
 
+    private fun getLocation(){
+        Log.d(TAG, "latitude: 12312.12312,  Longitud: 424.23423")
     }
 }
