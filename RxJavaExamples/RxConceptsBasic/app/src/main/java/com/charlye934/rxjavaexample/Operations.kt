@@ -14,7 +14,14 @@ class Operations {
     val mList = mutableListOf<Int>(1,2,3,4,5,6,7,8,9,10,11,12)
     val arrayNum = arrayOf<Int>(1,2,3,4,5,6,7,8,9,10,11,12)
     val arrayNum2 = arrayOf<Int>(10,20,30,40,50,6,7,8,9,10,11,12)
-
+    val mUser = mutableListOf<User>(
+        User(1,"demo1",15),
+        User(2,"demo2",16),
+        User(3,"demo3",17),
+        User(4,"demo4",18),
+        User(5,"demo5",19),
+        User(6,"demo6",20)
+    )
 
     /*
     * JUST OPERATOR
@@ -163,8 +170,20 @@ class Operations {
         }
     }
 
-    fun filterOperator(): Observable<User>{
-        return Observable.fromIterable(m)
+    /*
+    * emit only those items from an Observable that pass a predicate test
+    * http://reactivex.io/documentation/operators/filter.html
+    * */
+    fun filterOperator(): Observable<User> {
+        return Observable.fromIterable(mUser)
+    }
+
+    /*
+    *Last emit only the last item (or the last item that meets some condition) emitted by an Observable
+    * http://reactivex.io/documentation/operators/last.html
+    * */
+    fun lastOperator(): Observable<User>{
+        return Observable.fromIterable(mUser)
     }
 
 

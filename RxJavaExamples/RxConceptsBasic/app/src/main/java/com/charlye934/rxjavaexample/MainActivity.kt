@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        operation.createOperator()
+        /*operation.createOperator()
             .subscribe(
                 {
                     Log.d(MainActivity.TAG, "Oncomplete: $it")
@@ -31,7 +31,37 @@ class MainActivity : AppCompatActivity() {
                     Log.d(MainActivity.TAG, "onError: $it")
                 },{
                     Log.d(MainActivity.TAG, "onComplete")
-                })
+                })*/
+
+        /*operation.filterOperator()
+            .filter{
+                it.age >= 18
+            }
+            .subscribe(
+                {
+                    Log.d(MainActivity.TAG, "Oncomplete: $it")
+                    //getLocation()
+                },
+                {
+                    Log.d(MainActivity.TAG, "onError: $it")
+                },{
+                    Log.d(MainActivity.TAG, "onComplete")
+                }
+            )*/
+
+        operation.lastOperator()
+            .last(User(1,"demo1",15))
+            .subscribe(
+                {
+                    Log.d(MainActivity.TAG, "Oncomplete: $it")
+                    //getLocation()
+                },
+                {
+                    Log.d(MainActivity.TAG, "onError: $it")
+                },{
+                    Log.d(MainActivity.TAG, "onComplete")
+                }
+            )
     }
 
     private fun getLocation(){
