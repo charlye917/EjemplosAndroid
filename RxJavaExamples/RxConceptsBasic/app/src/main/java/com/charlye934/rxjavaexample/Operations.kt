@@ -20,6 +20,11 @@ class Operations {
         User(3,"demo3",17),
         User(4,"demo4",18),
         User(5,"demo5",19),
+        User(6,"demo6",20),
+        User(2,"demo2",16),
+        User(3,"demo3",17),
+        User(4,"demo4",18),
+        User(5,"demo5",19),
         User(6,"demo6",20)
     )
 
@@ -186,6 +191,17 @@ class Operations {
         return Observable.fromIterable(mUser)
     }
 
+    /*
+    * Distinct suppress duplicate items emitted by an Observable
+    * */
+    fun distinctOperator(): Observable<User>{
+        return Observable.fromIterable(mUser)
+    }
 
-
+    /*
+    * Skip suppress the first n items emitted by an observable
+    * */
+    fun skipOperator(): Observable<User>{
+        return Observable.fromIterable(mUser)
+    }
 }
