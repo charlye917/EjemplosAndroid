@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.util.Linkify
 import android.util.Log
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.*
 
 class RX00IntroActivity : AppCompatActivity() {
@@ -34,6 +37,11 @@ class RX00IntroActivity : AppCompatActivity() {
                 Log.d("TAG1", "OnComplete" + "HILO: " + Thread.currentThread().name)
             }
         }
+
+        numerosObservable
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe(numerosObserver)
 
     }
 }
