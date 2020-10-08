@@ -15,17 +15,16 @@ class Operations {
     val arrayNum = arrayOf<Int>(1,2,3,4,5,6,7,8,9,10,11,12)
     val arrayNum2 = arrayOf<Int>(10,20,30,40,50,6,7,8,9,10,11,12)
     val mUser = mutableListOf<User>(
-        User(1,"demo1",15),
-        User(2,"demo2",16),
-        User(3,"demo3",17),
-        User(4,"demo4",18),
-        User(5,"demo5",19),
-        User(6,"demo6",20),
-        User(2,"demo2",16),
-        User(3,"demo3",17),
-        User(4,"demo4",18),
-        User(5,"demo5",19),
-        User(6,"demo6",20)
+        User(1,"demo1",15,null),
+        User(2,"demo2",16,null),
+        User(3,"demo3",17,null),
+        User(4,"demo4",18,null),
+        User(5,"demo5",19,null),
+        User(6,"demo6",20,null),
+        User(2,"demo2",16,null),
+        User(3,"demo3",17,null),
+        User(4,"demo4",18,null),
+        User(5,"demo5",19,null)
     )
 
     /*
@@ -176,7 +175,7 @@ class Operations {
     }
 
     /*
-    * emit only those items from an Observable that pass a predicate test
+    * filter emit only those items from an Observable that pass a predicate test
     * http://reactivex.io/documentation/operators/filter.html
     * */
     fun filterOperator(): Observable<User> {
@@ -203,5 +202,41 @@ class Operations {
     * */
     fun skipOperator(): Observable<User>{
         return Observable.fromIterable(mUser)
+    }
+
+    /*
+    * Buffer periodically gather items emitted by an observable into bundles
+    * and emited these bundles rather than emitting the items one at a time
+    * http://reactivex.io/documentation/operators/buffer.html
+    * */
+    fun bufferOperator(): Observable<User>{
+        return Observable.fromIterable(mUser)
+    }
+
+    /*
+    * Map
+    * transform the items emitted by an observable by applying a function to each item
+    * */
+    fun mapOperator(): Observable<User>{
+        return Observable.fromIterable(mUser)
+    }
+
+    /*
+    * flatMap transform the items emitted by an Observable into Observables
+    * then flatten the emissions from those into a single Observable
+    * */
+    fun flatMapOperator(): Observable<User>{
+        return Observable.fromIterable(mUser)
+    }
+
+    fun getUser(id:Long):Observable<User>{
+        return Observable.fromIterable(mUser)
+            .filter {
+                it.id == id
+            }
+    }
+
+    fun flatMapTwo(): Observable<List<User>>{
+        return Observable.just(mUser)
     }
 }
