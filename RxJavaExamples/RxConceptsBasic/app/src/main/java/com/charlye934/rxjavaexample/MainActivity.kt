@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG,"onError: $it")
             })*/
 
-        operation.flatMapOperator()
+        /*operation.flatMapOperator()
             .flatMap{
                 operation.getUser(it.id)
             }
@@ -120,8 +120,69 @@ class MainActivity : AppCompatActivity() {
             .subscribe({
                 Log.d(TAG,"onNext: $it")
             },{
+                Log.d(TAG,"onNext: $it")
+            })*/
+
+        /*operation.groupByOperator()
+            .groupBy {
+                it.age
+            }
+            //.filter{
+            //    it.key == 16 }
+            .flatMapSingle {
+                it.toList()
+            }
+            .subscribe({group ->
+                /*group.subscribe(
+                    {
+                        Log.d(TAG,"Key: : ${group.key} | value: $it")
+                    },{
+                        Log.d(TAG,"onError: $it")
+                    }
+                )*/
+                Log.d(TAG, "onNext $group")
+            },{
                 Log.d(TAG,"onError: $it")
-            })
+            })*/
+
+        /*operation.mergeOperator()
+            .subscribe({
+                Log.d(TAG,"onNext: $it")
+            },{
+                Log.d(TAG,"onError: $it")
+            },{
+                Log.d(TAG,"onComplete")
+            })*/
+
+        /*operation.concatOperator()
+            .subscribe({
+                Log.d(TAG,"onNext: $it")
+            },{
+                Log.d(TAG,"onError: $it")
+            },{
+                Log.d(TAG,"onComplete")
+            })*/
+
+        /*operation.startWithOperator()
+            .subscribe({
+                Log.d(TAG,"onNext: $it")
+            },{
+                Log.d(TAG,"onError: $it")
+            },{
+                Log.d(TAG,"onComplete")
+            })*/
+
+        /*operation.zipOperator()
+            .subscribe({
+                Log.d(TAG,"onNext: $it")
+            },{
+                Log.d(TAG,"onError: $it")
+            },{
+                Log.d(TAG,"onComplete")
+            })*/
+
+        createSingleObservable().subscribe(observerSingleObservable())
+
     }
 
     private fun getLocation(){
