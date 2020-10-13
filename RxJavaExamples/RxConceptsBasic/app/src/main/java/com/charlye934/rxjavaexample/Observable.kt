@@ -85,7 +85,9 @@ fun observerSingleObservable(): SingleObserver<List<User>> {
         }
 
         override fun onSuccess(t: List<User>) {
-            t?.forEach {  }
+            t?.forEach {
+                Log.d("Prueba","onSuccess: $it")
+            }
         }
     }
 }
