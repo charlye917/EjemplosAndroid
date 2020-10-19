@@ -7,6 +7,7 @@ import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -181,8 +182,24 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG,"onComplete")
             })*/
 
-        createSingleObservable().subscribe(observerSingleObservable())
+        //createSingleObservable().subscribe(observerSingleObservable())
 
+        /*createMaybeObservable().subscribe(
+            observereMaybeObservable()
+        )*/
+
+        //createCompletableObservable().subscribe(observerCompletableObservable())
+
+        createflowableObservable()
+            .onBackpressureDrop()
+            .observeOn(Schedulers.io(), false, 10)
+            .subscribe({
+                Log.d(TAGPRUEBA, "subscribe: $it")
+            },{
+                Log.d(TAGPRUEBA, "error: $it")
+            },{
+                Log.d(TAGPRUEBA, "onComplete")
+            })
     }
 
     private fun getLocation(){
