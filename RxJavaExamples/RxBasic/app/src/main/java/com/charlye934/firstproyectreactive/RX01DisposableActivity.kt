@@ -16,14 +16,17 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class RX01DisposableActivity : AppCompatActivity() {
 
     private lateinit var disposable:Disposable
+    private var arrays = arrayListOf<String>("1","2","3","4","5","6","7","8","9","10","11","12")
+    private var arrays2 = arrayListOf<String>("1","2","3","4","5","6","7","8","9","10","11","12")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rx01_disposable)
 
-        val numerosObservables = Observable.just("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+        val numerosObservables = Observable.just(arrays, arrays2)
 
-        val numerosObserver = object : Observer<String>{
+        val numerosObserver = object : Observer<ArrayList<String>>{
             override fun onSubscribe(d: Disposable?) {
                 disposable = d!!
                 Log.d(
@@ -32,7 +35,7 @@ class RX01DisposableActivity : AppCompatActivity() {
                 )
             }
 
-            override fun onNext(numero: String?) {
+            override fun onNext(numero: ArrayList<String>?) {
                 Log.d("TAG1", "isDispose: " + disposable.isDisposed)
                 Log.d("TAG1", "onNext: Numero: " + numero + " Hilo: " + Thread.currentThread().name)
             }
