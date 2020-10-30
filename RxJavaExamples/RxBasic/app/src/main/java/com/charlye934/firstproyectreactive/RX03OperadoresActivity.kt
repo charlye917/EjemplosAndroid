@@ -24,6 +24,52 @@ class RX03OperadoresActivity : AppCompatActivity() {
         //probarRange()
         //probarRepeat()
         //probarInterval()
+        probarCreateLargaDuracion()
+    }
+
+    private fun probarLambada(){
+        /*
+        (argumentos)->{cuerpo o body}
+        (art1, arg2)->{body}
+         */
+    }
+
+
+    var sumar: Sumar = object : Sumar {
+        override fun apply(a: Int, b: Int): Int {
+            return a + b
+        }
+    }
+
+
+    private fun largaDuracion(): String{
+        try{
+            Thread.sleep(10000)
+        }catch (e: InterruptedException){
+            e.printStackTrace()
+        }
+        Log.d("Tag1", "terminado")
+        return "Terminado"
+    }
+
+    private fun probarCreateLargaDuracion(){
+        Log.d("TAG1", "----------------Create LargaDuracion----------------")
+        Observable
+            .create(ObservableOnSubscribe<String> {
+                try {
+                    it.onNext(largaDuracion())
+                } catch (e: java.lang.Exception) {
+                    it.onError(e)
+                }
+            })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.d("TAG1", "onNext: $it")
+            }, {
+                Log.d("TAG1", "onError: " + it.message)
+            })
+        //largaDuracion()
     }
 
     private fun probarCreateException(){
