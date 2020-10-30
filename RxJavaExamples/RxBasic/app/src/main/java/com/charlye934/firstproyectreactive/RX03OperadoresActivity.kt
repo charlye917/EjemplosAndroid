@@ -26,6 +26,22 @@ class RX03OperadoresActivity : AppCompatActivity() {
         //probarInterval()
     }
 
+    private fun probarBuffer(){
+        Log.d("TAG1", "----------------Buffer----------------")
+        val integerObservable = Observable.just(1, 2, 3, 4, 5, 6, 7, 8, 9)
+        integerObservable
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .buffer(3)
+            .subscribe({
+                for (int in it)
+                    Log.d("TAG1", "Buffer item-> $it")
+            }, {
+                Log.d("TAG1", "onError $it")
+            })
+
+    }
+
     private fun probarCreateException(){
         Log.d("TAG1", "----------------Create----------------")
         Observable
