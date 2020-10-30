@@ -24,6 +24,90 @@ class RX03OperadoresActivity : AppCompatActivity() {
         //probarRange()
         //probarRepeat()
         //probarInterval()
+        //probarCreateLargaDuracion()
+        //probarMap()
+        probarFlatMap()
+    }
+
+    private fun probarFlatMap(){
+        Log.d("TAG1", "----------------FlatMap----------------")
+        Observable
+            .just("item2")
+            .flatMap {
+                Log.d("TAG1", "inside the flapMat$s")
+                return@flatMap Observable.just("$it 1, $it 2, $it 3")
+            }
+            .subscribe({
+                Log.d("TAG1", it!!)
+            }, {
+
+            })
+    }
+
+    private fun probarMap(){
+        Log.d("TAG1", "----------------Map----------------")
+        val empleados = Empleado.setUpEmpleados()
+        Observable.fromArray(empleados)
+            .map{
+                var nombres = ArrayList<String>()
+                for(e in empleados){
+                    nombres.add(e.nombre)
+                }
+                return@map nombres
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.d("TAG1", "Map->items: $it")
+
+            }, {
+                Log.d("TAG1", "Error: $it")
+            })
+    }
+
+    private fun probarLambada(){
+        /*
+        (argumentos)->{cuerpo o body}
+        (art1, arg2)->{body}
+         */
+    }
+
+
+    var sumar: Sumar = object : Sumar {
+        override fun apply(a: Int, b: Int): Int {
+            return a + b
+        }
+    }
+
+
+    private fun largaDuracion(): String{
+        try{
+            Thread.sleep(10000)
+        }catch (e: InterruptedException){
+            e.printStackTrace()
+        }
+        Log.d("Tag1", "terminado")
+        return "Terminado"
+    }
+
+    private fun probarCreateLargaDuracion(){
+        Log.d("TAG1", "----------------Create LargaDuracion----------------")
+        Observable
+            .create(ObservableOnSubscribe<String> {
+                try {
+                    it.onNext(largaDuracion())
+                } catch (e: java.lang.Exception) {
+                    it.onError(e)
+                }
+            })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.d("TAG1", "onNext: $it")
+            }, {
+                Log.d("TAG1", "onError: " + it.message)
+            })
+        //largaDuracion()
     }
 
     private fun probarBuffer(){
