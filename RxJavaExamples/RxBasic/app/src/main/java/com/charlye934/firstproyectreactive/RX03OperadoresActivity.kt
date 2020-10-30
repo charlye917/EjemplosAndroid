@@ -24,7 +24,45 @@ class RX03OperadoresActivity : AppCompatActivity() {
         //probarRange()
         //probarRepeat()
         //probarInterval()
-        probarCreateLargaDuracion()
+        //probarCreateLargaDuracion()
+        //probarMap()
+        probarFlatMap()
+    }
+
+    private fun probarFlatMap(){
+        Log.d("TAG1", "----------------FlatMap----------------")
+        Observable
+            .just("item2")
+            .flatMap {
+                Log.d("TAG1", "inside the flapMat$s")
+                return@flatMap Observable.just("$it 1, $it 2, $it 3")
+            }
+            .subscribe({
+                Log.d("TAG1", it!!)
+            }, {
+
+            })
+    }
+
+    private fun probarMap(){
+        Log.d("TAG1", "----------------Map----------------")
+        val empleados = Empleado.setUpEmpleados()
+        Observable.fromArray(empleados)
+            .map{
+                var nombres = ArrayList<String>()
+                for(e in empleados){
+                    nombres.add(e.nombre)
+                }
+                return@map nombres
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.d("TAG1", "Map->items: $it")
+
+            }, {
+                Log.d("TAG1", "Error: $it")
+            })
     }
 
     private fun probarLambada(){
