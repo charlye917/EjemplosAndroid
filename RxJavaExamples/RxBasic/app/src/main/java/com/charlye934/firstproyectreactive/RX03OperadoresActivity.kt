@@ -1,14 +1,18 @@
 package com.charlye934.firstproyectreactive
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
-import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
+import io.reactivex.ObservableOnSubscribe
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.Timed
+import io.reactivex.subjects.Subject
 import java.util.concurrent.TimeUnit
 
 class RX03OperadoresActivity : AppCompatActivity() {
@@ -29,12 +33,501 @@ class RX03OperadoresActivity : AppCompatActivity() {
         probarFlatMap()
     }
 
+    private fun probarTakeWhile(){
+        Log.d("TAG1", "----------------TakeWhile----------------")
+        Observable
+            .create{
+                for (i in 0..10){
+                    try {
+                        Thread.sleep(500)
+                        it.onNext(i)
+                    }catch (e: InterruptedException{
+                        e.printStackTrace()
+                    })
+                }
+            }
+
+    }
+
+    private fun probarTakeUntil(){
+        Log.d("TAG1", "----------------TakeUntil----------------")
+        val observable1 = Observable
+            .create{ emmiter: ObservableEmitter<Any> ->
+                for(i in 0..10){
+                    try {
+                        Thread.sleep(500)
+                    }catch (e: InterruptedException){
+                        e.printStackTrace()
+                    }
+                }
+                emmiter.onComplete()
+            }
+
+        val observable2 = Observable.timer(3, TimeUnit.SECONDS)
+
+        observable1.takeUntil(observable2)
+            .subscribe{Log.d("TAG1", "onNext: $it")}
+
+    }
+
+    private fun probarSkipWhile(){
+        Log.d("TAG1", "----------------SkipWhile----------------")
+        Observable
+            .create { emitter: ObservableEmitter<Any> ->
+                for (i in 0..9) {
+                    try {
+                        Thread.sleep(400)
+                        emitter.onNext(i)
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
+                    }
+                }
+                emitter.onComplete()
+            }
+            .skipWhile { e: Any -> e as Int <= 4 }
+            .subscribe { e: Any ->
+                Log.d(
+                    "TAG1",
+                    "onNext: $e"
+                )
+            }
+
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarSkipUntil(){
+        Log.d("TAG1", "----------------SkipUntil----------------")
+        val observable1: Observable<Int> = Observable
+            .create {
+                for (i in 0..10) {
+                    try {
+                        Thread.sleep(500)
+                        it.onNext(i)
+                    }catch (e: InterruptedException){
+                        e.printStackTrace()
+                    }
+                }
+                it.onComplete()
+            }
+
+        val observable2 = Observable.timer(3, TimeUnit.SECONDS)
+
+        observable1.skipUntil(observable2)
+            .subscribe{
+                Log.d("TAG1", "onNext: $it")
+            }
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarSeqeunceEqual(){
+        Log.d("TAG1", "----------------SequenceEqual----------------")
+        val numeroObservable1 = Observable.just(1, -1, 2, -6, 4, -78)
+        val numeroObservable2 = Observable.just(1, -1, 2, -6, 4, -78)
+
+        Observable.sequenceEqual(numeroObservable1, numeroObservable2)
+            .subscribe({ Log.d("TAG1", "onSuccess: $it") }, {})
+
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarDefaultIfEmpty(){
+        Log.d("TAG1", "----------------DefaultIfEmpty----------------")
+        Observable.create(ObservableOnSubscribe<Int> { emitter ->
+            val num = 100
+            if (num % 2 == 0) {
+                emitter.onNext(num)
+            }
+            emitter.onComplete()
+        })
+            .defaultIfEmpty(0)
+            .subscribe { Log.d("TAG1", "onNext: $it") }
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarContains(){
+        Log.d("TAG1", "----------------Contains----------------")
+        val numeroObservable = Observable.just(2, 0, -2, 66, 100, -478)
+        numeroObservable
+            .contains(-477)
+            .subscribe({
+                Log.d("TAG1", "onSuccess: $it")
+            }, {})
+
+    }
+
+    private fun probarAmb(){
+        Log.d("TAG1", "----------------Amb----------------")
+        val numeroObservable1 = Observable.just(1, -1, 2, -6, 4, -78)
+        val numeroObservable2 = Observable.just(2, 0, -2, 66, 100, -478)
+
+        Observable
+            .ambArray(numeroObservable1.delay(10, TimeUnit.SECONDS), numeroObservable2)
+            .subscribe{
+                Log.d("TAG1", "onNext: $it")
+            }
+
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarAll(){
+        Log.d("TAG1", "----------------All----------------")
+        val numeroObservable = Observable.just(1, -1, 2, -6, 4, -78)
+        numeroObservable
+            .all { it > 0 }
+            .subscribe({
+                Log.d("TAG1", "onSuccess: $it")
+            }, {})
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarUsing() {
+        Log.d("TAG1", "----------------Using----------------")
+        Observable.using(
+            { "Using" },
+            { s ->
+                Observable.create { e: ObservableEmitter<Char?> ->
+                    for (c in s.toCharArray()) {
+                        e.onNext(c)
+                    }
+                    e.onComplete()
+                }
+            })
+        { Log.d("TAG1", "Disposase: $it") }
+            .subscribe {
+                Log.d(
+                    "TAG1",
+                    "onNext $it"
+                )
+            }
+    }
+
+    private fun probarTimeStamp(){
+        Log.d("TAG1", "----------------TimeStamp----------------")
+        val letrasObservable: Observable<String> = Observable.create {
+            it.onNext("A")
+            it.onNext("B")
+            it.onNext("C")
+        }
+        letrasObservable
+            .timestamp()
+            .subscribe(object : Observer<Timed<String>> {
+                override fun onSubscribe(d: Disposable) {}
+                override fun onNext(t: Timed<String>) {
+                    Log.d("TAG1", "onNext $t")
+                }
+
+                override fun onError(e: Throwable) {}
+                override fun onComplete() {}
+
+            })
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarTimerOut(){
+        Log.d("TAG1", "----------------TimeOut----------------")
+        val letrasObservable: Observable<String> = Observable.create{
+            it.onNext("A")
+            it.onNext("B")
+            it.onNext("C")
+        }
+
+        Observable.timer(1, TimeUnit.SECONDS)
+            .timeout(500, TimeUnit.MILLISECONDS)
+            .subscribe(
+                { e: Long ->
+                    Log.d(
+                        "TAG1",
+                        "onNext $e"
+                    )
+                }
+            ) { e: Throwable ->
+                Log.d(
+                    "TAG1",
+                    "onError $e"
+                )
+            }
+
+    }
+
+    private fun probarTimeInterval() {
+        Log.d("TAG1", "----------------TimeInterval----------------")
+        val letrasObservable = Observable.create { e: ObservableEmitter<String?> ->
+            e.onNext("A")
+            e.onNext("B")
+            e.onNext("C")
+        }
+        Observable//TODO Debe de ir letrasObsercables
+            .interval(500, TimeUnit.MILLISECONDS)
+            .take(3)
+            .timeInterval()
+            .subscribe(object : Subject<Timed<Long?>?>() {
+                override fun hasObservers(): Boolean {
+                    return false
+                }
+
+                override fun hasThrowable(): Boolean {
+                    return false
+                }
+
+                override fun hasComplete(): Boolean {
+                    return false
+                }
+
+                override fun getThrowable(): Throwable? {
+                    return null
+                }
+
+                override fun onSubscribe(d: Disposable) {}
+                override fun onNext(longTimed: Timed<Long?>) {
+                    Log.d("TAG1", "onNext: $longTimed")
+                }
+
+                override fun onError(e: Throwable) {}
+                override fun onComplete() {}
+                override fun subscribeActual(observer: Observer<in Timed<Long?>?>?) {}
+            })
+    }
+
+    private fun probarObserverOnSubscribe(){
+        Log.d("TAG1", "----------------ObserverOn-SubscribeOn----------------")
+        val observable: Observable<String> = Observable.create{
+            Log.d("TAG1", "observable ejecutandose en hilo: ${Thread.currentThread().name}")
+            it.onNext("Emitiendo item")
+        }
+
+        observable
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe{
+                Log.d("TAG1", "observer ejecutandose en: ${Thread.currentThread().name}")
+            }
+
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarDo(){
+        Log.d("TAG1", "----------------Do----------------")
+        val numeroObservable = Observable.just("1", "4", "89", "45", "0")
+        numeroObservable
+            .doOnNext{Log.d("TAG1", "doOnNext: $it")}
+            .doAfterNext{Log.d("TAG1", "doAfterNext: $it")}
+            .doOnComplete { Log.d("TAG1", "doOnComplete") }
+            .subscribe{
+                Log.d("TAG1", "oNext")
+            }
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarDealy(){
+        Log.d("TAG1", "----------------Delay----------------")
+        val numeroObservable = Observable.just("1", "4", "89", "45", "0")
+        numeroObservable
+            .delay(5, TimeUnit.SECONDS)
+            .subscribe{
+                Log.d("TAG1", "onNext: $it")
+            }
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarRetryWhen(){
+        Observable
+            .create { e: ObservableEmitter<Any> ->
+                e.onNext("probando Retry")
+                e.onError(Throwable("test"))
+            }
+            .retryWhen { error: Observable<Throwable?> -> error.retry() }
+            .subscribe(
+                { e: Any ->
+                    Log.d(
+                        "TAG1",
+                        "onNext $e"
+                    )
+                },
+                { e: Throwable ->
+                    Log.d(
+                        "TAG1",
+                        "onError$e"
+                    )
+                }
+            ) { Log.d("TAG1", "onComplete") }
+    }
+
+    private fun probarZip(){
+        Log.d("TAG1", "----------------Zip----------------")
+        val observable1 = Observable
+            .interval(1, TimeUnit.SECONDS)
+            .map { "Grupo1: $it" }
+
+        val observable2 = Observable
+            .interval(1, TimeUnit.SECONDS)
+            .map { "Grupo2: $it" }
+
+        Observable.zip(observable1, observable2, { x, y -> "$x - $y" })
+            .subscribe { Log.d("TAG1", it) }
+    }
+
+    private fun probarMerge(){
+        Log.d("TAG1", "----------------Merge----------------")
+        val observable1 = Observable
+            .interval(2, TimeUnit.SECONDS)
+            .map { "Grupo 1 : $it" }
+
+        val observable2 = Observable
+            .interval(1, TimeUnit.SECONDS)
+            .map { "Grupo 2: $it" }
+
+        Observable.merge(observable1, observable2)
+            .subscribe{Log.d("TAG1", "onNext: $it")}
+
+    }
+
+    private fun probarJoin(){
+        Log.d("TAG1", "----------------Join----------------")
+        val LEFTWINDOWDURATION = 0L
+        val RIGHTWINDOWDURATION = 0L
+
+        val left = Observable
+            .interval(70, TimeUnit.MILLISECONDS).take(10)
+
+        val right = Observable
+            .interval(100, TimeUnit.MILLISECONDS).take(10)
+
+        left.join(
+            right,
+            { e -> Observable.timer(LEFTWINDOWDURATION, TimeUnit.MILLISECONDS) },
+            { e -> Observable.timer(RIGHTWINDOWDURATION, TimeUnit.MILLISECONDS) },
+            { l, r ->
+                Log.d("TAG1", "left: $l right: $r")
+                l + r
+            })
+            .subscribe { e -> Log.d("TAG1", "result: $e") }
+
+    }
+
+    /*private fun probarCombineLatest(){
+        Log.d("TAG1", "----------------combineLatest----------------")
+        val observable1 = Observable.interval(100, TimeUnit.MILLISECONDS).take(10)
+        val observable2 = Observable.interval(50, TimeUnit.MILLISECONDS).take(20)
+
+        Observable
+            .combineLatest(observable1, observable2, @RequiresApi(Build.VERSION_CODES.N)
+            object : BiFunction<Long?, Long?, String?>() {
+                override fun apply(p0: Long?, p1: Long?): String? {
+                    return "Observable1: $p0 Observable2: $p1"
+                }
+            })
+            .subscribe { e -> Log.d("TAG1", "onNext: $e") }
+    }*/
+
+    private fun probarTakeLast(){
+        Log.d("TAG1", "----------------TakeLast----------------")
+        val numeroObservable = Observable.just(1000, 2, 3, 4, 9, 7, 3, 81, 98, 78)
+        numeroObservable
+            .takeLast(5)
+            .subscribe{
+                Log.d("TAG1", "onNext: $it")
+            }
+    }
+
+    private fun probarTake(){
+        Log.d("TAG1", "----------------Take----------------")
+        val numeroObservable = Observable.just(1000, 2, 3, 4, 9, 7, 3, 81, 98, 78)
+        numeroObservable
+            .take(5)
+            .subscribe{
+                Log.d("TAG1", "onNext $it")
+            }
+
+    }
+
+    private fun probarSkipLast(){
+        Log.d("TAG1", "----------------Skip Last----------------")
+        val numeroObservable = Observable.just(1000, 2, 3, 4, 9, 7, 3, 81, 98, 78)
+        numeroObservable
+            .skipLast(3)
+            .subscribe{
+                Log.d("TAG1", "onNext: $it")
+            }
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarSkip(){
+        Log.d("TAG1", "----------------Skip----------------")
+        val numeroObservable = Observable.just(1000, 2, 3, 4, 9, 7, 3, 81, 98, 78)
+        numeroObservable
+            .skip(3)
+            .subscribe{
+                Log.d("TAG1", "onNext: $it")
+            }
+
+    }
+
+    @SuppressLint("CheckResult")
+    private fun provarSample(){
+        Log.d("TAG1", "----------------Sample----------------")
+        Observable
+            .interval(490, TimeUnit.MILLISECONDS)
+            .take(10)
+            .sample(2000, TimeUnit.MILLISECONDS)
+            .subscribe { Log.d("TAG1", "onNext: $it") }
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarLast(){
+        Log.d("TAG1", "----------------Last----------------")
+        val numeroObservable = Observable.just(1000, 2, 3, 4, 5, 6, 7, 8, 9)
+        numeroObservable
+            .last(0)
+            .subscribe({
+                Log.d("TAG1", "onNext: Es el ultimo: $it")
+            }, {})
+
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarIgnoreElements(){
+        Log.d("TAG1", "----------------IngnoreElements----------------")
+        val numeroObservable = Observable.just(1000, 2, 3, 4, 5, 6, 7, 8, 9)
+        numeroObservable
+            .ignoreElements()
+            .subscribe{
+                Log.d("TAG1", "onComplete")
+            }
+
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarFirst(){
+        Log.d("TAG1", "----------------First----------------")
+        val numeroObservable = Observable.just(1000, 2, 3, 4, 5, 6, 7, 8, 9)
+        numeroObservable
+            .first(0)
+            .subscribe({
+                Log.d("TAG1", "onNext: $it")
+            }, {})
+
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarFilter(){
+        Log.d("TAG1", "----------------Filter----------------")
+        val numeroObservable = Observable.just(1, 2, 3, 4, 5, 6, 7, 8, 9)
+        numeroObservable
+            .filter {
+                it % 2 == 0
+            }
+            .subscribe{
+                Log.d("TAG1", "onNext: $it")
+            }
+    }
+
+    @SuppressLint("CheckResult")
     private fun probarFlatMap(){
         Log.d("TAG1", "----------------FlatMap----------------")
         Observable
             .just("item2")
             .flatMap {
-                Log.d("TAG1", "inside the flapMat$s")
+                Log.d("TAG1", "inside the flapMat$it")
                 return@flatMap Observable.just("$it 1, $it 2, $it 3")
             }
             .subscribe({
@@ -44,6 +537,7 @@ class RX03OperadoresActivity : AppCompatActivity() {
             })
     }
 
+    @SuppressLint("CheckResult")
     private fun probarMap(){
         Log.d("TAG1", "----------------Map----------------")
         val empleados = Empleado.setUpEmpleados()
@@ -90,6 +584,7 @@ class RX03OperadoresActivity : AppCompatActivity() {
         return "Terminado"
     }
 
+    @SuppressLint("CheckResult")
     private fun probarCreateLargaDuracion(){
         Log.d("TAG1", "----------------Create LargaDuracion----------------")
         Observable
@@ -118,7 +613,7 @@ class RX03OperadoresActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .buffer(3)
             .subscribe({
-                for (int in it)
+                for (@SuppressLint("CheckResult") int in it)
                     Log.d("TAG1", "Buffer item-> $it")
             }, {
                 Log.d("TAG1", "onError $it")
@@ -126,6 +621,7 @@ class RX03OperadoresActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("CheckResult")
     private fun probarCreateException(){
         Log.d("TAG1", "----------------Create----------------")
         Observable
@@ -148,6 +644,7 @@ class RX03OperadoresActivity : AppCompatActivity() {
             )
     }
 
+    @SuppressLint("CheckResult")
     private fun probarInterval(){
         Log.d("TAG1", "----------------Interval----------------")
         Observable
@@ -162,6 +659,7 @@ class RX03OperadoresActivity : AppCompatActivity() {
             })
     }
 
+    @SuppressLint("CheckResult")
     private fun probarCreate(){
         Log.d("TAG1", "----------------Create----------------")
         Observable
@@ -189,6 +687,7 @@ class RX03OperadoresActivity : AppCompatActivity() {
             })
     }
 
+    @SuppressLint("CheckResult")
     private fun probarRepeat(){
         Log.d("TAG1", "----------------Repeat----------------")
         Observable
@@ -203,6 +702,7 @@ class RX03OperadoresActivity : AppCompatActivity() {
             })
     }
 
+    @SuppressLint("CheckResult")
     private fun probarRange(){
         Log.d("TAG1", "----------------Range----------------")
         Observable.range(7, 17)
@@ -217,6 +717,7 @@ class RX03OperadoresActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("CheckResult")
     private fun probarFromArray(){
         Log.d("TAG1", "----------------FromArray----------------")
         val numeros = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
@@ -242,14 +743,13 @@ class RX03OperadoresActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 object : Observer<Array<String>> {
-                    override fun onSubscribe(d: Disposable?) {}
-                    override fun onNext(t: Array<String>?) {
+                    override fun onSubscribe(d: Disposable) {}
+                    override fun onNext(t: Array<String>) {
                         Log.d("TAG1", "JustArray->onNext " + t!!.size)
                     }
 
-                    override fun onError(e: Throwable?) {}
+                    override fun onError(e: Throwable) {}
                     override fun onComplete() {}
-
                 }
             )
     }
@@ -261,16 +761,15 @@ class RX03OperadoresActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 object : Observer<String> {
-                    override fun onSubscribe(d: Disposable?) {}
-                    override fun onNext(t: String?) {
+                    override fun onComplete() {}
+                    override fun onSubscribe(d: Disposable) {}
+                    override fun onNext(t: String) {
                         Log.d("TAG1", "Just->onNext $t")
                     }
 
-                    override fun onError(e: Throwable?) {
+                    override fun onError(e: Throwable) {
                         Log.d("TAG1", "just onError: $e")
                     }
-
-                    override fun onComplete() {}
                 }
             )
     }
