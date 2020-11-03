@@ -1,9 +1,12 @@
 package com.charlye934.firstproyectreactive
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import hu.akarnokd.rxjava2.math.MathObservable
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
@@ -14,6 +17,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.schedulers.Timed
 import io.reactivex.subjects.Subject
 import java.util.concurrent.TimeUnit
+import java.util.function.BiFunction
 
 class RX03OperadoresActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,20 +37,90 @@ class RX03OperadoresActivity : AppCompatActivity() {
         probarFlatMap()
     }
 
-    private fun probarTakeWhile(){
-        Log.d("TAG1", "----------------TakeWhile----------------")
-        Observable
-            .create{
-                for (i in 0..10){
-                    try {
-                        Thread.sleep(500)
-                        it.onNext(i)
-                    }catch (e: InterruptedException{
-                        e.printStackTrace()
-                    })
+    @SuppressLint("CheckResult")
+    private fun probarReduce(){
+        Log.d("TAG1", "----------------Reduce----------------")
+        Observable.just(2, 2, 2, 2)
+            .reduce(@RequiresApi(Build.VERSION_CODES.N)
+            object : BiFunction<Int, Int, Int>, io.reactivex.functions.BiFunction<Int, Int, Int> {
+                @SuppressLint("CheckResult")
+                override fun apply(p0: Int, p1: Int): Int {
+                    return p0 * p1
                 }
+            })
+            .subscribe{
+                Log.d("TAG1", "Resultado: $it")
             }
 
+    }
+
+    private fun probarMaxMinSum(){
+        Log.d("TAG1", "----------------MaxMinSum----------------")
+        val observable = Observable.fromArray(1, 34, 55, 1000, -234, 33, 567)
+        MathObservable
+            .max(observable)
+            .subscribe{
+                Log.d("TAG1", "max: $it")
+            }
+
+        MathObservable
+            .min(observable)
+            .subscribe{
+                Log.d("TAG1", "min: $it")
+            }
+
+        MathObservable
+            .sumInt(observable)
+            .subscribe{
+                Log.d("TAG1", "min: $it")
+            }
+
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarCount(){
+        Log.d("TAG1", "----------------Count----------------")
+        val numeroObservable = Observable.fromArray(1, 34, 55, 33, 567)
+        numeroObservable
+            .count()
+            .subscribe(
+                { Log.d("TAG1", "count $it") }, {}
+            )
+
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarAverage(){
+        Log.d("TAG1", "----------------Average----------------")
+        val numeroObservable = Observable.fromArray(1, 34, 55, 33, 567)
+        MathObservable.averageDouble(numeroObservable)
+            .subscribe{
+                Log.d("TAG1", "average")
+            }
+    }
+
+    @SuppressLint("CheckResult")
+    private fun probarTakeWhile() {
+        Log.d("TAG1", "----------------TakeWhile----------------")
+        Observable
+            .create { emitter: ObservableEmitter<Any> ->
+                for (i in 0..9) {
+                    try {
+                        Thread.sleep(500)
+                        emitter.onNext(i)
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
+                    }
+                }
+                emitter.onComplete()
+            }
+            .takeWhile { e: Any -> e as Int <= 4 }
+            .subscribe { e: Any ->
+                Log.d(
+                    "TAG1",
+                    "onNext: $e"
+                )
+            }
     }
 
     private fun probarTakeUntil(){
@@ -517,7 +591,7 @@ class RX03OperadoresActivity : AppCompatActivity() {
                 it % 2 == 0
             }
             .subscribe{
-                Log.d("TAG1", "onNext: $it")
+                Log.d("TAG1", "onNext es par: $it")
             }
     }
 
