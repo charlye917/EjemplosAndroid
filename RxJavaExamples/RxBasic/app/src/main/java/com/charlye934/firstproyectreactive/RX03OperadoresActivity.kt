@@ -18,7 +18,7 @@ import io.reactivex.subjects.Subject
 import java.util.concurrent.TimeUnit
 import java.util.function.BiFunction
 
-class RX03OperadoresActivity : AppCompatActivity() {
+class  RX03OperadoresActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_r_x03_operadores)
