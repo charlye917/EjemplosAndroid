@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*operation.createOperator()
+        operation.createOperator()
             .subscribe(
                 {
                     Log.d(MainActivity.TAG, "Oncomplete: $it")
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d(MainActivity.TAG, "onError: $it")
                 },{
                     Log.d(MainActivity.TAG, "onComplete")
-                })*/
+                })
 
         /*operation.filterOperator()
             .filter{
@@ -184,9 +184,9 @@ class MainActivity : AppCompatActivity() {
 
         //createSingleObservable().subscribe(observerSingleObservable())
 
-        /*createMaybeObservable().subscribe(
+        createMaybeObservable().subscribe(
             observereMaybeObservable()
-        )*/
+        )
 
         //createCompletableObservable().subscribe(observerCompletableObservable())
 
