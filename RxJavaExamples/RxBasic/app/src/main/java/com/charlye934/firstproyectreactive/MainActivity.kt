@@ -30,6 +30,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, RX04TiposObservablesActivity::class.java))
         }
         btRX05Subject.setOnClickListener {
+            startActivity(Intent(this, RX05SubjectActivity::class.java))
+        }
+        btRX06Bus.setOnClickListener {
 
         }
     }
