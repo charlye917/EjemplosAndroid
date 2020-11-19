@@ -33,7 +33,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, RX05SubjectActivity::class.java))
         }
         btRX06Bus.setOnClickListener {
-
+            startActivity(Intent(this, RX06BusActivity::class.java))
+        }
+        btRX07Binding.setOnClickListener {
+            startActivity(Intent(this, RX07BindingActivity::class.java))
+        }
+        btRX08BackPressure.setOnClickListener {
+            startActivity(Intent(this, RX08BackPressureActivity::class.java))
         }
     }
 }
