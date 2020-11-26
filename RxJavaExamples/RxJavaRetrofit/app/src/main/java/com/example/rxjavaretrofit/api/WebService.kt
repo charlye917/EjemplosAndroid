@@ -27,5 +27,5 @@ object WebService {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 
-    fun createService(service: WebServiceApi) = retrofit.create(service::class.java)
+    fun createService() = retrofit.create(WebServiceApi::class.java)
 }
