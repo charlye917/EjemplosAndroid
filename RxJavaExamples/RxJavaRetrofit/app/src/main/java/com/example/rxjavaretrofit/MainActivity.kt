@@ -22,5 +22,9 @@ class MainActivity : AppCompatActivity() {
         btRxRetrofit.setOnClickListener {
             startActivity(Intent(this, RxRetrofitActivity::class.java))
         }
+
+        btRxRetrofitAnidado.setOnClickListener {
+            startActivity(Intent(this, RxRetrofitAnidadoActivity::class.java))
+        }
     }
 }

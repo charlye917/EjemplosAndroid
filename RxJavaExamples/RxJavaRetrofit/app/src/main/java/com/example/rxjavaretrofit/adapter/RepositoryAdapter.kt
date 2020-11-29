@@ -8,7 +8,7 @@ import com.example.rxjavaretrofit.R
 import com.example.rxjavaretrofit.model.GithubRepo
 import kotlinx.android.synthetic.main.list_item_repo.view.*
 
-class RepositoryAdapter(): RecyclerView.Adapter<RepositoryAdapter.RepositroyViewHolder>(){
+class RepositoryAdapter: RecyclerView.Adapter<RepositoryAdapter.RepositroyViewHolder>(){
 
     private var repos = listOf<GithubRepo>()
 

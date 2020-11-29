@@ -1,27 +1,29 @@
 package com.example.rxjavaretrofit
 
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rxjavaretrofit.adapter.RepositoryAdapter
 import com.example.rxjavaretrofit.api.WebService
 import com.example.rxjavaretrofit.model.GithubRepo
+import hu.akarnokd.rxjava2.math.MathObservable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_rx_retrofit.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.function.Consumer
+import java.util.*
+import kotlin.math.log
 
 class RxRetrofitActivity : AppCompatActivity() {
 
-    private lateinit var adapter: RepositoryAdapter
-    private lateinit var githubRepos: List<GithubRepo>
+    private lateinit var adapterRepo: RepositoryAdapter
+    private lateinit var githubRepos: MutableList<GithubRepo>
     private lateinit var compositeDisposable: CompositeDisposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,37 +32,113 @@ class RxRetrofitActivity : AppCompatActivity() {
 
         setUpView()
         //sinRxJava()
-        conRxLambda()
+        //conRxLambda()
+        //conRxFiltrarLenguaje()
+        conRxOrdenarPorEstrellas()
     }
 
-    private fun conRx(){
-        compositeDisposable.add(
-            WebService
+    @SuppressLint("CheckResult")
+    private fun conRxAverageEstrellas(){
+        val observable = WebService
                 .createService()
                 .getReposForUserRx("JakeWharton")
+                .toObservable()
+                .flatMapIterable { it }
+                .map { it.stargazers_count }
+
+        MathObservable.averageDouble(observable)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(@RequiresApi(Build.VERSION_CODES.N)
-                object : Consum er<List<GithubRepo>>(){
+                .subscribe { it }
 
-                })
+        MathObservable.max(observable)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { it }
+
+        MathObservable.min(observable)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { it }
+    }
+
+    private fun conRxOrdenarPorEstrellas(){
+        compositeDisposable.add(
+                WebService
+                        .createService()
+                        .getReposForUserRx("JakeWharton")
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .toObservable()
+                        .flatMapIterable{it}
+                        .toSortedList { o1, o2 ->
+                            o1.stargazers_count - o2.stargazers_count
+                        }
+                        .subscribe({
+                                   adapterRepo.setData(it)
+                        },{
+                            Log.d("TAG1","ERROR: $it")
+                        })
+        )
+    }
+
+    private fun conRxFiltrarLenguajeLambdaMasOperadores(){
+        compositeDisposable.add(
+                WebService
+                        .createService()
+                        .getReposForUserRx("JakeWharton")
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .toObservable()
+                        .flatMapIterable { it }
+                        .filter{it.language == "Java"}
+                        //.take(3)
+                        .skip(3)
+                        .subscribe({
+                            githubRepos.add(it)
+                            adapterRepo.setData(githubRepos)
+                        },{
+                            Log.d("_TAG","error: $it")
+                        })
+        )
+    }
+
+    private fun conRxFiltrarLenguaje(){
+        compositeDisposable.add(
+                WebService
+                        .createService()
+                        .getReposForUserRx("JakeWharto")
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .toObservable()
+                        .flatMapIterable { it }
+                        .filter{ it.language == "Java" }
+                        .subscribe({
+                            githubRepos.add(it)
+                            Log.d("__TAG",githubRepos.toString())
+                            adapterRepo.setData(githubRepos)
+                        },{
+                            Log.d("TAG1", "error: $it")
+                        })
         )
     }
 
     private fun conRxLambda(){
         compositeDisposable.add(
-            WebService
-                .createService()
-                .getReposForUserRx("JakeWharton")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        adapter.setData(it)
-                    },{
-                        Log.d("TAG1","Error: ${it.printStackTrace()}")
-                    }
-                )
+                WebService
+                        .createService()
+                        .getReposForUserRx("JakeWharton")
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                {
+                                    githubRepos.addAll(it)
+                                    adapterRepo.setData(githubRepos)
+                                },
+                                {
+                                    Log.d("TAG1", "Error: ${it.printStackTrace()}")
+                                }
+                        )
         )
     }
 
@@ -69,17 +147,17 @@ class RxRetrofitActivity : AppCompatActivity() {
             .createService()
             .getReposForUser("JakeWharton")
 
-        call.enqueue(object : Callback<List<GithubRepo>>{
+        call.enqueue(object : Callback<List<GithubRepo>> {
             override fun onResponse(
-                call: Call<List<GithubRepo>>,
-                response: Response<List<GithubRepo>>
+                    call: Call<List<GithubRepo>>,
+                    response: Response<List<GithubRepo>>
             ) {
-                githubRepos = response.body()!!
-                adapter.setData(githubRepos)
+                githubRepos.addAll(response.body()!!)
+                adapterRepo.setData(githubRepos)
             }
 
             override fun onFailure(call: Call<List<GithubRepo>>, t: Throwable) {
-                Log.d("TAG1","ERROR ${t.printStackTrace()}")
+                Log.d("TAG1", "ERROR ${t.printStackTrace()}")
             }
 
         })
@@ -87,13 +165,13 @@ class RxRetrofitActivity : AppCompatActivity() {
 
     private fun setUpView(){
         compositeDisposable = CompositeDisposable()
-        githubRepos = listOf()
-        adapter = RepositoryAdapter()
+        githubRepos = mutableListOf()
+        adapterRepo = RepositoryAdapter()
         val lim = LinearLayoutManager(this)
         lim.orientation = LinearLayoutManager.VERTICAL
         recyclerView.apply {
             layoutManager = lim
-            adapter = this.adapter
+            adapter = adapterRepo
         }
     }
 
