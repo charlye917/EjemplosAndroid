@@ -4,7 +4,7 @@
 ## File y SharedPreferences
 
 ### Ejemplo de uso 
-<img src="01.jpg" alt="drawing" width="400"/>
+<img src="01.gif" alt="drawing" width="400"/>
 
 ### Administración de claves
 
