@@ -1,7 +1,7 @@
 # Encrypt File y SharedPreferences
 
 ### Ejemplo de uso 
-<img src="01.gif" alt="drawing" width="400"/>
+<img src="01.gif" alt="drawing" width="200"/>
 
 ### Administración de claves
 
