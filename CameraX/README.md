@@ -2,6 +2,11 @@
 
 ### Ejemplo sencillo del uso de Camera X
 
+## Imagenes del proyecto IntercambioColores
+<img src="Imagenes/01.jpg" alt="drawing" width="200"/>  <img src="Imagenes/02.jpg" alt="drawing" width="200"/>
+
+## Codigo
+
 ```kotlin
 //Ejecutar camara
     private fun startCamera() {
@@ -58,8 +63,4 @@
         })
     }
 ```
-
-## Imagenes del proyecto IntercambioColores
-<img src="Imagenes/01.jpg" alt="drawing" width="400"/>
-<img src="Imagenes/02.jpg" alt="drawing" width="400"/>
 
