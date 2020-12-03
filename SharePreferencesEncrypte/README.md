@@ -1,8 +1,5 @@
 # Encrypt File y SharedPreferences
 
-## Ejemplo del uso de la biblioteca de seguridad de android para
-## File y SharedPreferences
-
 ### Ejemplo de uso 
 <img src="01.gif" alt="drawing" width="400"/>
 
