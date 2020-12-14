@@ -1,10 +1,10 @@
-package com.charlye934.jetpackdogs.model
+package com.charlye934.jetpackdogs.data.db
 
 import android.content.Context
-import android.support.v4.app.INotificationSideChannel
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.charlye934.jetpackdogs.data.model.DogBreed
 
 @Database(entities = [DogBreed::class], version = 1)
 abstract class DogDatabase: RoomDatabase(){

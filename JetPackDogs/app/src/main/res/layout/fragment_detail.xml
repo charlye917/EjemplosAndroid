@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@{palette.color}"
-        tools:context=".view.DetailFragment">
+        tools:context=".presenter.view.DetailFragment">
     
         <ImageView
             android:id="@+id/imgDogDetail"

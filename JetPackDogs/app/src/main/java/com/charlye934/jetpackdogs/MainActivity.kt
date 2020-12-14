@@ -1,4 +1,4 @@
-package com.charlye934.jetpackdogs.view
+package com.charlye934.jetpackdogs
 
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
-import com.charlye934.jetpackdogs.R
 import com.charlye934.jetpackdogs.utils.PERMISSION_SEND_SMS
+import com.charlye934.jetpackdogs.presenter.view.DetailFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.jar.Manifest
 
 class MainActivity : AppCompatActivity() {
 

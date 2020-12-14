@@ -1,7 +1,7 @@
-package com.charlye934.jetpackdogs.model
+package com.charlye934.jetpackdogs.data.service
 
 
-import io.reactivex.Observable
+import com.charlye934.jetpackdogs.data.model.DogBreed
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

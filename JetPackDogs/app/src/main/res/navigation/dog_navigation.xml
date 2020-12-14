@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.charlye934.jetpackdogs.view.DetailFragment"
+        android:name="com.charlye934.jetpackdogs.presenter.view.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail"
         app:startDestination="@id/actionListFragment">
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/listFragmentDog2"
-        android:name="com.charlye934.jetpackdogs.view.ListFragmentDog"
+        android:name="com.charlye934.jetpackdogs.presenter.view.ListFragmentDog"
         android:label="fragment_list_dog"
         tools:layout="@layout/fragment_list_dog" >
         <action
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.charlye934.jetpackdogs.view.SettingsFragment"
+        android:name="com.charlye934.jetpackdogs.presenter.view.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

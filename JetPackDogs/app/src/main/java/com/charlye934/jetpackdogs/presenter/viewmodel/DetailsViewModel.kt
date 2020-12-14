@@ -1,10 +1,9 @@
-package com.charlye934.jetpackdogs.viewmodel
+package com.charlye934.jetpackdogs.presenter.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.charlye934.jetpackdogs.model.DogBreed
-import com.charlye934.jetpackdogs.model.DogDatabase
+import com.charlye934.jetpackdogs.data.model.DogBreed
+import com.charlye934.jetpackdogs.data.db.DogDatabase
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(application: Application) : BaseViewModel(application){

@@ -1,4 +1,4 @@
-package com.charlye934.jetpackdogs.model
+package com.charlye934.jetpackdogs.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

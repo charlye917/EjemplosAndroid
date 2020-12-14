@@ -1,19 +1,15 @@
-package com.charlye934.jetpackdogs.viewmodel
+package com.charlye934.jetpackdogs.presenter.viewmodel
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
-import androidx.annotation.MainThread
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.charlye934.jetpackdogs.model.DogBreed
-import com.charlye934.jetpackdogs.model.DogDatabase
-import com.charlye934.jetpackdogs.model.DogsApiService
+import com.charlye934.jetpackdogs.data.model.DogBreed
+import com.charlye934.jetpackdogs.data.db.DogDatabase
+import com.charlye934.jetpackdogs.data.service.DogsApiService
 import com.charlye934.jetpackdogs.utils.NotificationHelper
 import com.charlye934.jetpackdogs.utils.SharedPreferencesHelper
-import io.reactivex.android.schedulers.AndroidSchedulers
+
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch

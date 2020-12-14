@@ -1,4 +1,4 @@
-package com.charlye934.jetpackdogs.view
+package com.charlye934.jetpackdogs.presenter.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.charlye934.jetpackdogs.R
 import com.charlye934.jetpackdogs.databinding.ItemDogBinding
-import com.charlye934.jetpackdogs.model.DogBreed
+import com.charlye934.jetpackdogs.data.model.DogBreed
 import kotlinx.android.synthetic.main.item_dog.view.*
 
 class DoglistAdapter(val dogsList:ArrayList<DogBreed>) : RecyclerView.Adapter<DoglistAdapter.DogViewHolder>(), DogClickListener {

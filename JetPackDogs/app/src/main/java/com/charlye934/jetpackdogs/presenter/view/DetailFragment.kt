@@ -1,6 +1,5 @@
-package com.charlye934.jetpackdogs.view
+package com.charlye934.jetpackdogs.presenter.view
 
-import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Bitmap
@@ -16,13 +15,14 @@ import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.charlye934.jetpackdogs.MainActivity
 import com.charlye934.jetpackdogs.R
 import com.charlye934.jetpackdogs.databinding.FragmentDetailBinding
 import com.charlye934.jetpackdogs.databinding.SendSmsDialogBinding
-import com.charlye934.jetpackdogs.model.DogBreed
-import com.charlye934.jetpackdogs.model.DogPalette
-import com.charlye934.jetpackdogs.model.SmsInfo
-import com.charlye934.jetpackdogs.viewmodel.DetailsViewModel
+import com.charlye934.jetpackdogs.data.model.DogBreed
+import com.charlye934.jetpackdogs.data.model.DogPalette
+import com.charlye934.jetpackdogs.data.model.SmsInfo
+import com.charlye934.jetpackdogs.presenter.viewmodel.DetailsViewModel
 
 
 class DetailFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.charlye934.jetpackdogs.view
+package com.charlye934.jetpackdogs.presenter.view
 
 import android.os.Bundle
 import android.view.*
@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.charlye934.jetpackdogs.R
-import com.charlye934.jetpackdogs.viewmodel.ListViewModel
+import com.charlye934.jetpackdogs.presenter.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_list_dog.*
 

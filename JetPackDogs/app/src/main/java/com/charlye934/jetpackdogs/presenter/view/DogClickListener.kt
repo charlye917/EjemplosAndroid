@@ -1,4 +1,4 @@
-package com.charlye934.jetpackdogs.view
+package com.charlye934.jetpackdogs.presenter.view
 
 import android.view.View
 

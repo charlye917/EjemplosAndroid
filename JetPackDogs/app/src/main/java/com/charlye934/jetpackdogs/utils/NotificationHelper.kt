@@ -5,13 +5,12 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.charlye934.jetpackdogs.R
-import com.charlye934.jetpackdogs.view.MainActivity
+import com.charlye934.jetpackdogs.MainActivity
 
 class NotificationHelper(val context:Context) {
     private val CHANNEL_ID = "Dogs channel id"

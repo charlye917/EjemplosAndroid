@@ -1,4 +1,4 @@
-package com.charlye934.jetpackdogs.viewmodel
+package com.charlye934.jetpackdogs.presenter.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
