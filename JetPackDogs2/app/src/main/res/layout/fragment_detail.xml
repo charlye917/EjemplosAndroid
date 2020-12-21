@@ -8,11 +8,11 @@
     <data>
         <variable
             name="dog"
-            type="com.charlye934.jetpackdogs.model.DogBreed" />
+            type="com.charlye934.jetpackdogs.data.model.DogBreed" />
         
         <variable
             name="palette"
-            type="com.charlye934.jetpackdogs.model.DogPalette" />
+            type="com.charlye934.jetpackdogs.data.model.DogPalette" />
     </data>
     
     <RelativeLayout 

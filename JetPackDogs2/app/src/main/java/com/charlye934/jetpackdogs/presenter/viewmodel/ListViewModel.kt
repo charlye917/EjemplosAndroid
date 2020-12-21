@@ -67,7 +67,7 @@ class ListViewModel(application: Application) : BaseViewModel(application){
         disposible.addAll(
             dogsService.getDogs()
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidScheduler)
                 .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>(){
                     override fun onSuccess(dogList: List<DogBreed>) {
                         storeDogsLocally(dogList)
