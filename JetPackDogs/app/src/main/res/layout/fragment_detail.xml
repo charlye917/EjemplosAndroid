@@ -40,6 +40,30 @@
             android:id="@+id/txtDogPurposeDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Title"/>
+            style="@style/Title"
+            android:layout_below="@+id/txtDogNameDetail"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="4dp"
+            android:text="@{dog.temperament}"/>
+
+        <TextView
+            android:id="@+id/txtDogTemplerament"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Title"
+            android:layout_below="@id/txtDogPurposeDetail"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="4dp"
+            android:text="@{dog.temperament}" />
+
+        <TextView
+            android:id="@+id/txtDogLifeSpan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Title"
+            android:layout_below="@id/txtDogTemplerament"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="4dp"
+            android:text="@{dog.lifeSpan}"/>
     </RelativeLayout>
 </layout>
