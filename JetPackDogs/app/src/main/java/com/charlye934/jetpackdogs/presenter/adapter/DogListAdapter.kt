@@ -16,7 +16,7 @@ class DogListAdapter : RecyclerView.Adapter<DogListAdapter.DogViewHolder>() {
 
     fun updateDogList(newDogList: List<DogBreed>){
         dogList.clear()
-        dogList.addAll(dogList)
+        dogList.addAll(newDogList)
         notifyDataSetChanged()
     }
 

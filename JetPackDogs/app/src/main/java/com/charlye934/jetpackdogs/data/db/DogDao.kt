@@ -1,9 +1,11 @@
 package com.charlye934.jetpackdogs.data.db
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.charlye934.jetpackdogs.data.model.DogBreed
 
+@Dao
 interface DogDao{
     @Insert
     suspend fun insertAll(vararg dogs: DogBreed): List<Long>

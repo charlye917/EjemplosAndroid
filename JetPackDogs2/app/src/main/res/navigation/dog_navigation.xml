@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/dog_navigation"
-    app:startDestination="@id/listFragmentDog2">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/dog_navigation"
+            app:startDestination="@id/listFragment">
 
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.charlye934.jetpackdogs.presenter.view.DetailFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail"
-        app:startDestination="@id/actionListFragment">
+            android:id="@+id/listFragment"
+            android:name="com.devtides.dogs.view.ListFragment"
+            android:label="ListFragment">
+        <action
+                android:id="@+id/actionDetailFragment"
+                app:destination="@id/detailFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"/>
+        <action
+                android:id="@+id/actionSettings"
+                app:destination="@id/settingsFragment"/>
+    </fragment>
+    <fragment
+            android:id="@+id/detailFragment"
+            android:name="com.devtides.dogs.view.DetailFragment"
+            android:label="DetailFragment">
+        <action
+                android:id="@+id/actionListFragment"
+                app:destination="@id/listFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"/>
         <argument
             android:name="dogUuid"
             android:defaultValue="0"
             app:argType="integer"/>
-        <action
-            android:id="@+id/actionListFragment"
-            app:destination="@id/listFragmentDog2" />
     </fragment>
     <fragment
-        android:id="@+id/listFragmentDog2"
-        android:name="com.charlye934.jetpackdogs.presenter.view.ListFragmentDog"
-        android:label="fragment_list_dog"
-        tools:layout="@layout/fragment_list_dog" >
-        <action
-            android:id="@+id/action_listFragmentDog2_actionDetailFragment"
-            app:destination="@id/detailFragment" />
-        <action
-            android:id="@+id/actionSettings"
-            app:destination="@id/settingsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.charlye934.jetpackdogs.presenter.view.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+            android:id="@+id/settingsFragment"
+            android:name="com.devtides.dogs.view.SettingsFragment"
+            android:label="SettingsFragment"/>
 </navigation>
