@@ -34,8 +34,7 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
 
     private val statusMessage = MutableLiveData<Event<String>>()
 
-    val message: LiveData<Event<String>>
-        get() = statusMessage
+    val message: LiveData<Event<String>> = statusMessage
 
     init {
         saveOrUpdateButtonText.value = "Save"
