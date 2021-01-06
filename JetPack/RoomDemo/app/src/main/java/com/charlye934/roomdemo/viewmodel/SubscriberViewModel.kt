@@ -9,12 +9,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charlye934.roomdemo.Event
 import com.charlye934.roomdemo.db.Subscriber
+import com.charlye934.roomdemo.db.SubscriberDAO
 import com.charlye934.roomdemo.db.SubscriberRepository
 import kotlinx.coroutines.launch
 
 
-class SubscriberViewModel(private val repository: SubscriberRepository) : ViewModel(), Observable {
+class SubscriberViewModel(private val dao : SubscriberDAO) : ViewModel(), Observable {
 
+    private val repository = SubscriberRepository(dao)
     val subscribers = repository.subscribers
     private var isUpdateOrDelete = false
     private lateinit var subscriberToUpdateOrDelete: Subscriber
@@ -33,7 +35,6 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
     val clearAllOrDeleteButtonText = MutableLiveData<String>()
 
     private val statusMessage = MutableLiveData<Event<String>>()
-
     val message: LiveData<Event<String>> = statusMessage
 
     init {
@@ -134,14 +135,6 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
 
     }
 
-
-    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
-
-    }
-
-    override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
-
-    }
-
-
+    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}
+    override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}
 }

@@ -33,7 +33,6 @@ class MyRecyclerViewAdapter(private val clickListener:(Subscriber)->Unit) : Recy
 }
 
 class MyViewHolder(val binding: ListItemBinding):RecyclerView.ViewHolder(binding.root){
-
     fun bind(subscriber: Subscriber, clickListener:(Subscriber)->Unit){
           binding.nameTextView.text = subscriber.name
           binding.emailTextView.text = subscriber.email

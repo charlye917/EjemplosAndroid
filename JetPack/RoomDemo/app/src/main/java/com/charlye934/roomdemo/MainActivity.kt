@@ -12,48 +12,48 @@ import com.anushka.roomdemo.R
 import com.anushka.roomdemo.databinding.ActivityMainBinding
 import com.charlye934.roomdemo.db.Subscriber
 import com.charlye934.roomdemo.db.SubscriberDatabase
-import com.charlye934.roomdemo.db.SubscriberRepository
 import com.charlye934.roomdemo.viewmodel.SubscriberViewModel
 import com.charlye934.roomdemo.viewmodel.SubscriberViewModelFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var subscriberViewModel: SubscriberViewModel
-    private lateinit var adapter: MyRecyclerViewAdapter
+    private lateinit var adapterRecycler: MyRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val dao = SubscriberDatabase.getInstance(application).subscriberDAO
-        val repository = SubscriberRepository(dao)
-        val factory = SubscriberViewModelFactory(repository)
+        val factory = SubscriberViewModelFactory(dao)
 
         subscriberViewModel = ViewModelProvider(this,factory).get(SubscriberViewModel::class.java)
         binding.myViewModel = subscriberViewModel
         binding.lifecycleOwner = this
         initRecyclerView()
 
-        subscriberViewModel.message.observe(this, Observer {
-         it.getContentIfNotHandled()?.let {
-             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-         }
+        subscriberViewModel.message.observe(this, Observer {event: Event<String> ->
+            event.getContentIfNotHandled().let {
+                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            }
         })
 
     }
 
    private fun initRecyclerView(){
-       binding.subscriberRecyclerView.layoutManager = LinearLayoutManager(this)
-       adapter = MyRecyclerViewAdapter({selectedItem: Subscriber ->listItemClicked(selectedItem)})
-       binding.subscriberRecyclerView.adapter = adapter
+       adapterRecycler = MyRecyclerViewAdapter { selectedItem: Subscriber -> listItemClicked(selectedItem) }
+       binding.subscriberRecyclerView.apply {
+           layoutManager = LinearLayoutManager(context)
+           adapter = adapterRecycler
+       }
        displaySubscribersList()
    }
 
     private fun displaySubscribersList(){
         subscriberViewModel.subscribers.observe(this, Observer {
             Log.i("MYTAG",it.toString())
-            adapter.setList(it)
-            adapter.notifyDataSetChanged()
+            adapterRecycler.setList(it)
+            adapterRecycler.notifyDataSetChanged()
         })
     }
 
