@@ -1,12 +1,12 @@
 # Ejemplos de Room con MVVM
 
 ## Room with MVVM and DataBinding
-<img src="RoomDemo/1.gif" alt="drawing" width="300"/>
+<img src="1.gif" alt="drawing" width="300"/>
 
 ## Documentación
 Estos son los 3 componentes principales de Room:
 
- -> Base de datos: Contiene el titular de la base de datos y sirve como punto de acceso principal para la conexión subyacente a los datos persistentes y relacionales de tu app.
+ - Base de datos: Contiene el titular de la base de datos y sirve como punto de acceso principal para la conexión subyacente a los datos persistentes y relacionales de tu app.
     La clase anotada con @Database debe cumplir con las siguientes condiciones:
 
         - Ser una clase abstracta que extiende RoomDatabase
@@ -14,9 +14,9 @@ Estos son los 3 componentes principales de Room:
         - Contener un método abstracto que tenga 0 argumentos y muestre la clase anotada con @Dao
             En el entorno de ejecución, puedes adquirir una instancia de Database llamando a Room.databaseBuilder() o Room.inMemoryDatabaseBuilder().
 
--> Entidad: Representa una tabla dentro de la base de datos.
+- Entidad: Representa una tabla dentro de la base de datos.
 
--> DAO: Contiene los métodos utilizados para acceder a la base de datos.
+- DAO: Contiene los métodos utilizados para acceder a la base de datos.
 
 ## Codigo
 ```kotlin
