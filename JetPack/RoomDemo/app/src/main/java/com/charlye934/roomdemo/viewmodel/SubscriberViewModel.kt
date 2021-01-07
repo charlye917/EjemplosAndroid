@@ -10,11 +10,11 @@ import androidx.lifecycle.viewModelScope
 import com.charlye934.roomdemo.Event
 import com.charlye934.roomdemo.db.Subscriber
 import com.charlye934.roomdemo.db.SubscriberDAO
-import com.charlye934.roomdemo.db.SubscriberRepository
+import com.charlye934.roomdemo.repository.SubscriberRepository
 import kotlinx.coroutines.launch
 
 
-class SubscriberViewModel(private val dao : SubscriberDAO) : ViewModel(), Observable {
+class SubscriberViewModel(dao : SubscriberDAO) : ViewModel(), Observable {
 
     private val repository = SubscriberRepository(dao)
     val subscribers = repository.subscribers
@@ -43,7 +43,6 @@ class SubscriberViewModel(private val dao : SubscriberDAO) : ViewModel(), Observ
     }
 
     fun saveOrUpdate() {
-
         if (inputName.value == null) {
             statusMessage.value = Event("Please enter subscriber's name")
         } else if (inputEmail.value == null) {
@@ -56,15 +55,11 @@ class SubscriberViewModel(private val dao : SubscriberDAO) : ViewModel(), Observ
                 subscriberToUpdateOrDelete.email = inputEmail.value!!
                 update(subscriberToUpdateOrDelete)
             } else {
-                val name = inputName.value!!
-                val email = inputEmail.value!!
-                insert(Subscriber(0, name, email))
+                insert(Subscriber(0, inputName.value!!, inputEmail.value!!))
                 inputName.value = null
                 inputEmail.value = null
             }
         }
-
-
     }
 
     fun clearAllOrDelete() {
@@ -73,7 +68,6 @@ class SubscriberViewModel(private val dao : SubscriberDAO) : ViewModel(), Observ
         } else {
             clearAll()
         }
-
     }
 
     fun insert(subscriber: Subscriber) = viewModelScope.launch {

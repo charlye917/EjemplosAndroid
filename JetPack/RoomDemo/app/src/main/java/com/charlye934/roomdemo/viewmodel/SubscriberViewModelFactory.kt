@@ -3,7 +3,6 @@ package com.charlye934.roomdemo.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.charlye934.roomdemo.db.SubscriberDAO
-import com.charlye934.roomdemo.db.SubscriberRepository
 import java.lang.IllegalArgumentException
 
 class SubscriberViewModelFactory(private val dao : SubscriberDAO):ViewModelProvider.Factory {
@@ -13,5 +12,4 @@ class SubscriberViewModelFactory(private val dao : SubscriberDAO):ViewModelProvi
      }
         throw IllegalArgumentException("Unknown View Model class")
     }
-
 }

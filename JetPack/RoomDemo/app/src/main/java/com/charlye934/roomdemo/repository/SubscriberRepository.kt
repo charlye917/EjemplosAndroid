@@ -1,4 +1,7 @@
-package com.charlye934.roomdemo.db
+package com.charlye934.roomdemo.repository
+
+import com.charlye934.roomdemo.db.Subscriber
+import com.charlye934.roomdemo.db.SubscriberDAO
 
 class SubscriberRepository(private val dao : SubscriberDAO) {
 
