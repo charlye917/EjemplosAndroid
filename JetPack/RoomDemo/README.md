@@ -1,7 +1,7 @@
 # Ejemplos de Room con MVVM
 
 ## Room with MVVM and DataBinding
-<img src="RoomDemo/1.gif" alt="drawing" width="300"/>
+<img src="1.gif" alt="drawing" width="300"/>
 
 ## Documentación
 Estos son los 3 componentes principales de Room:
