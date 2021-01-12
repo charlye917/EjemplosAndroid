@@ -57,7 +57,7 @@ class RetrofitInstance {
         }
     }
 }
-
+```
 
 ## Instance Retrofit 
 ```kotlin
