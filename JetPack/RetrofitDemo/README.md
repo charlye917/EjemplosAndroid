@@ -1,7 +1,7 @@
 # Retrofit
 
 ## Data class
-´´´kotlin
+```kotlin
 data class AlbumItem(
     @SerializedName("id")
     val id: Int,
@@ -10,9 +10,10 @@ data class AlbumItem(
     @SerializedName("userId")
     val userId: Int
 )
-´´´
+```
+
 ## Interface Service
-´´´kotlin
+```kotlin
 interface AlbumService {
     @GET("/albums")
     suspend fun getAlbums(): Response<Album>
@@ -26,9 +27,10 @@ interface AlbumService {
     @POST("/albums")
     suspend fun uploadAlbum(@Body album:AlbumItem): Response<AlbumItem>
 }
-´´´
+```
+
 ## Config retrofit
-´´´kotlin
+```kotlin
 class RetrofitInstance {
 
     companion object{
@@ -55,7 +57,7 @@ class RetrofitInstance {
         }
     }
 }
-´´´
+
 
 ## Instance Retrofit 
 ```kotlin
