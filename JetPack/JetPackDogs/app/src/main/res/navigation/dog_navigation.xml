@@ -6,21 +6,21 @@
     app:startDestination="@id/listFragment">
 
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.charlye934.jetpackdogs.presenter.fragment.DetailFragment"
-        android:label="DetailFragment"
-        tools:layout="@layout/fragment_detail">
-        <action
-            android:id="@+id/action_detailFragment_to_listFragment"
-            app:destination="@id/listFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/listFragment"
-        android:name="com.charlye934.jetpackdogs.presenter.fragment.ListFragment"
-        android:label="ListFragment"
-        tools:layout="@layout/fragment_list">
+        android:name="com.charlye934.jetpackdogs.view.ListFragment"
+        android:label="fragment_list"
+        tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.charlye934.jetpackdogs.view.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" >
+        <action
+            android:id="@+id/action_detailFragment_to_listFragment"
+            app:destination="@id/listFragment" />
     </fragment>
 </navigation>

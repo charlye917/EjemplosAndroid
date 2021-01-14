@@ -1,55 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
         <variable
             name="dog"
-            type="com.charlye934.jetpackdogs.data.model.DogBreed" />
-        <variable
-            name="listener"
-            type="com.charlye934.jetpackdogs.presenter.listener.DogClickListener" />
+            type="" />
     </data>
-
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:onClick="@{listener::onDogClicked}"
-        android:orientation="horizontal">
+        android:layout_height="125dp">
 
         <TextView
-            android:id="@+id/txtDogId"
+            android:id="@+id/dogId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="@{String.valueOf(dog.uuid)}"/>
+            android:visibility="gone" />
 
         <ImageView
-            android:id="@+id/imgItem"
+            android:id="@+id/imageView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:padding="4dp"
-            android:imagesUrl="@{dog.imageUrl}"/>
+            android:padding="4dp"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
+            android:padding="4dp"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="4dp">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtName"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{dog.dogBreed}"/>
+                style="@style/Title"
+                />
 
             <TextView
-                android:id="@+id/txtlifeSpan"
+                android:id="@+id/lifespan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{dog.lifeSpan}"/>
+                style="@style/Text"
+                />
+
         </LinearLayout>
+
     </LinearLayout>
 </layout>

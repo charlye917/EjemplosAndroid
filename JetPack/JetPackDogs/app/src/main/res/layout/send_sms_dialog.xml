@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
-        <variable
-            name="smsInfo"
-            type="com.charlye934.jetpackdogs.data.model.SmsInfo" />
+
     </data>
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:gravity="center_horizontal">
 
         <EditText
             android:id="@+id/smsDestination"
@@ -27,12 +25,13 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:layout_gravity="center_horizontal"
-            android:text="@{smsInfo.text}"/>
+           />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="center"
-            android:imagesUrl="@{smsInfo.imageUrl}"/>
+            />
+
     </LinearLayout>
 </layout>
