@@ -11,6 +11,10 @@ data class AlbumItem(
     val userId: Int
 )
 ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4040e17611e592be94156a978397959d7882a436
 ## Interface Service
 ```kotlin
 interface AlbumService {
@@ -27,6 +31,10 @@ interface AlbumService {
     suspend fun uploadAlbum(@Body album:AlbumItem): Response<AlbumItem>
 }
 ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4040e17611e592be94156a978397959d7882a436
 ## Config retrofit
 ```kotlin
 class RetrofitInstance {
