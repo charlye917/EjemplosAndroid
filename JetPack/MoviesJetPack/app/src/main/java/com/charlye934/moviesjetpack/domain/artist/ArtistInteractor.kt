@@ -1,8 +1,8 @@
-package com.charlye934.moviesjetpack.domain.repository
+package com.charlye934.moviesjetpack.domain.artist
 
 import com.charlye934.moviesjetpack.data.model.artist.Artist
 
-interface ArtistRepository {
+interface ArtistInteractor {
     suspend fun getArtist(): List<Artist>?
     suspend fun updateArtsit(): List<Artist>?
 }

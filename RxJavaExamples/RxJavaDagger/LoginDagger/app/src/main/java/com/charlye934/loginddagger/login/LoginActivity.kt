@@ -100,7 +100,6 @@ class LoginActivity : AppCompatActivity(), LoginActivityMVP.View {
 
     override fun showUserNotAvaible() {
         Toast.makeText(this, "Error el usuario no esta disponible", Toast.LENGTH_SHORT).show()
-
     }
 
     override fun showInputError() {
