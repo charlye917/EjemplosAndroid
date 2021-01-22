@@ -15,6 +15,6 @@ interface ArtistRepository {
     suspend fun clearAll()
 
     //Remote
-    suspend fun getArtists(): Response<ArtistList>
+    suspend fun getArtistsRemote(): Response<ArtistList>
 
 }
