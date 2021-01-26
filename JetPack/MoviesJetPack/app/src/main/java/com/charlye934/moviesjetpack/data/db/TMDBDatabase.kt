@@ -10,7 +10,7 @@ import com.charlye934.moviesjetpack.data.model.tvshow.TvShow
 abstract class TMDBDatabase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
-    abstract fun tvDao(): TvShow
-    abstract fun artistDao(): Artist
+    abstract fun tvDao(): TVShowDao
+    abstract fun artistDao(): ArtistDao
 
 }

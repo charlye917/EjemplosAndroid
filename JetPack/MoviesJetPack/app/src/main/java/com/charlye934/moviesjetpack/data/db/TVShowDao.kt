@@ -8,6 +8,7 @@ import com.charlye934.moviesjetpack.data.model.tvshow.TvShow
 
 @Dao
 interface TVShowDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveTvShows(tvShow: List<TvShow>)
 
