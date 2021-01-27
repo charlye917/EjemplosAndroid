@@ -1,4 +1,4 @@
-package com.charlye934.moviesjetpack.presentation.di
+package com.charlye934.moviesjetpack.presentation.di.core
 
 import com.charlye934.moviesjetpack.data.api.TMDBService
 import dagger.Module
