@@ -11,8 +11,6 @@ import javax.inject.Inject
 
 class ArtistFragment : Fragment() {
 
-    @Inject
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
