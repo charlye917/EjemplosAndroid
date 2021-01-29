@@ -2,8 +2,10 @@ package com.charlye934.moviesjetpack.presentation.fragment.tvshow
 
 import android.content.Context
 import android.os.Bundle
-import android.view.*
 import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -35,26 +37,25 @@ class TvShowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         tvShowViewModel = ViewModelProvider(this, factory)
-            .get(TvShowViewModel::class.java)
+                .get(TvShowViewModel::class.java)
 
         initRecyclerView()
-
     }
 
-    private fun initRecyclerView(){
+    private fun initRecyclerView() {
         adapterTvShow = TvShowAdapter()
         binding.tvRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = adapterTvShow
         }
 
-        displayPopularTvShow()
+        displayPopularMovies()
     }
 
-    private fun displayPopularTvShow(){
+    private fun displayPopularMovies() {
         binding.tvProgressBar.visibility = View.VISIBLE
-        val responseViewModel = tvShowViewModel.getTvShow()
-        responseViewModel.observe(this, Observer {
+        val responseLiveData = tvShowViewModel.getTvShow()
+        responseLiveData.observe(this, Observer {
             if(it != null){
                 adapterTvShow.setData(it)
                 binding.tvProgressBar.visibility = View.GONE
@@ -62,34 +63,6 @@ class TvShowFragment : Fragment() {
                 binding.tvProgressBar.visibility = View.GONE
             }
         })
-    }
-
-    private fun updateTvShow(){
-        binding.tvProgressBar.visibility = View.VISIBLE
-        val responseViewModel = tvShowViewModel.updateTvShow()
-        responseViewModel.observe(this, Observer {
-            if(it != null){
-                adapterTvShow.setData(it)
-                binding.tvProgressBar.visibility = View.GONE
-            }else{
-                binding.tvProgressBar.visibility = View.GONE
-            }
-        })
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.update, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-            R.id.action_update ->{
-                updateTvShow()
-                true
-            }
-            else ->  super.onOptionsItemSelected(item)
-        }
     }
 
     override fun onAttach(context: Context) {
