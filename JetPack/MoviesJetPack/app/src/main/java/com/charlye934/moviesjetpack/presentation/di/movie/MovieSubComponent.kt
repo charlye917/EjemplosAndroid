@@ -1,6 +1,6 @@
 package com.charlye934.moviesjetpack.presentation.di.movie
 
-import com.charlye934.moviesjetpack.presentation.fragment.MovieFragment
+import com.charlye934.moviesjetpack.presentation.fragment.movie.MovieFragment
 import dagger.Subcomponent
 
 @MovieScope

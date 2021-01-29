@@ -1,6 +1,6 @@
 package com.charlye934.moviesjetpack.presentation.di.artist
 
-import com.charlye934.moviesjetpack.presentation.fragment.ArtistFragment
+import com.charlye934.moviesjetpack.presentation.fragment.artist.ArtistFragment
 import dagger.Subcomponent
 
 @ArtistScope

@@ -28,6 +28,7 @@ class MovieInteractorImp(
             val body = response.body()
             if(body != null)
                 movielist = body.movies
+                Log.d("MyTag",movielist.toString())
         }catch (exeption: Exception){
             Log.i("MyTag", exeption.message.toString())
         }

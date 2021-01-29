@@ -1,17 +1,16 @@
 package com.charlye934.moviesjetpack
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.charlye934.moviesjetpack.data.model.artist.Artist
 import com.charlye934.moviesjetpack.databinding.ActivityMainBinding
-import com.charlye934.moviesjetpack.presentation.fragment.ArtistFragment
-import com.charlye934.moviesjetpack.presentation.fragment.MovieFragment
-import com.charlye934.moviesjetpack.presentation.fragment.TvShowFragment
+import com.charlye934.moviesjetpack.presentation.HomeListener
+import com.charlye934.moviesjetpack.presentation.fragment.HomeFragment
+import com.charlye934.moviesjetpack.presentation.fragment.artist.ArtistFragment
+import com.charlye934.moviesjetpack.presentation.fragment.movie.MovieFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HomeListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -21,21 +20,15 @@ class MainActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        setOnclick()
+        changeFragment(HomeFragment(), HomeFragment.TAG)
     }
 
-    private fun setOnclick(){
-        binding.movieButton.setOnClickListener {
-            changeFragment(MovieFragment(), MovieFragment.TAG)
-        }
+    override fun goToMovieFragment() {
+        changeFragment(MovieFragment(), MovieFragment.TAG)
+    }
 
-        binding.artistsButton.setOnClickListener {
-            changeFragment(ArtistFragment(), ArtistFragment.TAG)
-        }
-
-        binding.tvButton.setOnClickListener {
-            changeFragment(TvShowFragment(), TvShowFragment.TAG)
-        }
+    override fun goToArtistFragment() {
+        changeFragment(ArtistFragment(), ArtistFragment.TAG)
     }
 
     private fun changeFragment(fragment: Fragment, tag: String){
