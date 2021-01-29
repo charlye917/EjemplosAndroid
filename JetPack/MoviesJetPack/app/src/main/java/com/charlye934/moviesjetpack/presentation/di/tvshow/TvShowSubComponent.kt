@@ -1,10 +1,10 @@
 package com.charlye934.moviesjetpack.presentation.di.tvshow
 
-import com.charlye934.moviesjetpack.presentation.fragment.TvShowFragment
+import com.charlye934.moviesjetpack.presentation.fragment.tvshow.TvShowFragment
 import dagger.Subcomponent
 
 @TvShowScope
-@Subcomponent
+@Subcomponent(modules = [TvShowModule::class])
 interface TvShowSubComponent {
     fun inject(tvShowFragment: TvShowFragment)
 

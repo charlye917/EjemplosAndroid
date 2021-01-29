@@ -19,7 +19,7 @@ class ArtistInteractorImp(private val artistRepository: ArtistRepository) : Arti
         return newListOfArtist
     }
 
-    suspend fun getArtistFromAPI(): List<Artist>?{
+    private suspend fun getArtistFromAPI(): List<Artist>?{
         lateinit var artistList: List<Artist>
         try {
             val response = artistRepository.getArtistsRemote()
@@ -33,7 +33,7 @@ class ArtistInteractorImp(private val artistRepository: ArtistRepository) : Arti
         return artistList
     }
 
-    suspend fun getArtistFromDB(): List<Artist>{
+    private suspend fun getArtistFromDB(): List<Artist>{
         lateinit var artistList: List<Artist>
         try {
             artistList = artistRepository.getArtistFromDB()
@@ -51,7 +51,7 @@ class ArtistInteractorImp(private val artistRepository: ArtistRepository) : Arti
         return artistList
     }
 
-    suspend fun getArtistFromCache(): List<Artist>{
+    private suspend fun getArtistFromCache(): List<Artist>{
         lateinit var artistList: List<Artist>
         try {
             artistList = artistRepository.getArtistFromCache()
@@ -59,7 +59,7 @@ class ArtistInteractorImp(private val artistRepository: ArtistRepository) : Arti
             Log.d("__tag", e.message.toString())
         }
 
-        if(artistList.size >= 0){
+        if(artistList.size > 0){
             return artistList
         }else{
             artistList = getArtistFromDB()

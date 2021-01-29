@@ -8,5 +8,4 @@ class ArtistViewModelFactory(private val artistInteractor: ArtistInteractor): Vi
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return ArtistViewModel(artistInteractor) as T
     }
-
 }

@@ -3,10 +3,8 @@ package com.charlye934.moviesjetpack.presentation.fragment.movie
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -32,6 +30,7 @@ class MovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie, container, false)
         return binding.root
     }
@@ -70,9 +69,36 @@ class MovieFragment : Fragment() {
         })
     }
 
+    private fun updateMovies(){
+        binding.movieProgress.visibility = View.VISIBLE
+        val responseLiveData = movieViewModel.updateMovies()
+        responseLiveData.observe(this, Observer {
+            if(it != null){
+                adapterMovie.setList(it)
+                binding.movieProgress.visibility = View.GONE
+            }else{
+                binding.movieRecyclerView.visibility = View.GONE
+            }
+        })
+    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.update, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.action_update ->{
+                updateMovies()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         (context.applicationContext as Injector).createMovieSubComponent()
             .inject(this)
     }

@@ -5,9 +5,7 @@ import com.charlye934.moviesjetpack.data.model.movies.Movie
 import com.charlye934.moviesjetpack.data.repository.movie.MovieRepository
 import java.lang.Exception
 
-class MovieInteractorImp(
-    private val movieRepository: MovieRepository
-): MovieInteractor {
+class MovieInteractorImp(private val movieRepository: MovieRepository): MovieInteractor {
 
     override suspend fun getMovies(): List<Movie>? {
         return getMoviesFromCache()

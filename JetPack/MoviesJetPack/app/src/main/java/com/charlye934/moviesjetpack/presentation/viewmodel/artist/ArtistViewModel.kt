@@ -1,5 +1,6 @@
 package com.charlye934.moviesjetpack.presentation.viewmodel.artist
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.charlye934.moviesjetpack.domain.artist.ArtistInteractor

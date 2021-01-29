@@ -2,10 +2,9 @@ package com.charlye934.moviesjetpack.presentation.fragment.artist
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -16,6 +15,7 @@ import com.charlye934.moviesjetpack.databinding.FragmentArtistBinding
 import com.charlye934.moviesjetpack.presentation.di.Injector
 import com.charlye934.moviesjetpack.presentation.viewmodel.artist.ArtistViewModel
 import com.charlye934.moviesjetpack.presentation.viewmodel.artist.ArtistViewModelFactory
+import java.util.zip.Inflater
 import javax.inject.Inject
 
 class ArtistFragment : Fragment() {
@@ -30,6 +30,7 @@ class ArtistFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_artist, container, false)
         return binding.root
     }
@@ -40,6 +41,7 @@ class ArtistFragment : Fragment() {
         artistViewModel = ViewModelProvider(this,factory)
                 .get(ArtistViewModel::class.java)
 
+        initRecyclerView()
     }
 
     private fun initRecyclerView(){
@@ -53,8 +55,23 @@ class ArtistFragment : Fragment() {
     }
 
     private fun displayPopularArtist() {
+        Log.d("__TAG","Entro a display")
         binding.artistProgresBar.visibility = View.VISIBLE
         val responseLiveData = artistViewModel.getArtist()
+        responseLiveData.observe(this, Observer {
+            if(it != null){
+                Log.d("__TAG",it.toString())
+                adapterArtist.setList(it)
+                binding.artistProgresBar.visibility = View.GONE
+            }else{
+                binding.artistProgresBar.visibility = View.GONE
+            }
+        })
+    }
+
+    private fun updateArtist(){
+        binding.artistProgresBar.visibility = View.VISIBLE
+        val responseLiveData = artistViewModel.updateArtist()
         responseLiveData.observe(this, Observer {
             if(it != null){
                 adapterArtist.setList(it)
@@ -63,6 +80,21 @@ class ArtistFragment : Fragment() {
                 binding.artistProgresBar.visibility = View.GONE
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.update, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.action_update ->{
+                updateArtist()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onAttach(context: Context) {
