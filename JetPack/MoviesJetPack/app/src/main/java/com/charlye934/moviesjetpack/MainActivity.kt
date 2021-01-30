@@ -12,6 +12,7 @@ import com.charlye934.moviesjetpack.presentation.HomeListener
 import com.charlye934.moviesjetpack.presentation.fragment.HomeFragment
 import com.charlye934.moviesjetpack.presentation.fragment.artist.ArtistFragment
 import com.charlye934.moviesjetpack.presentation.fragment.movie.MovieFragment
+import com.charlye934.moviesjetpack.presentation.fragment.tvshow.TvShowFragment
 
 class MainActivity : AppCompatActivity(), HomeListener {
 
@@ -32,6 +33,10 @@ class MainActivity : AppCompatActivity(), HomeListener {
 
     override fun goToArtistFragment() {
         changeFragment(ArtistFragment(), ArtistFragment.TAG)
+    }
+
+    override fun goToTvShowFragment() {
+        changeFragment(TvShowFragment(), TvShowFragment.TAG)
     }
 
     private fun changeFragment(fragment: Fragment, tag: String){

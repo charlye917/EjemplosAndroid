@@ -56,7 +56,7 @@ class TvShowInteractorImp(private val tvShowRepository: TvShowRepository): TvSho
         }catch (e: Exception){
             Log.d("__TAG", e.message.toString())
         }
-        if(tvShowList.size >= 0){
+        if(tvShowList.size > 0){
             return tvShowList
         }else{
             tvShowList = getTvShowsFromDB()

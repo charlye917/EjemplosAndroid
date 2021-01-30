@@ -40,6 +40,10 @@ class HomeFragment : Fragment() {
         binding.artistsButton.setOnClickListener {
             homeListener.goToArtistFragment()
         }
+
+        binding.tvButton.setOnClickListener {
+            homeListener.goToTvShowFragment()
+        }
     }
 
     override fun onAttach(context: Context) {
