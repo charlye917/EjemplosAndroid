@@ -1,8 +1,8 @@
 # Ejemplos de la libreria de JetPack
 
 ## Camera X
-<img src="CameraX/Imagenes/01.gif" alt="drawing" width="300"/>
-<img src="CameraX/Imagenes/02.gif" alt="drawing" width="300"/>
+<img src="CameraX/Imagenes/01.jpg" alt="drawing" width="300"/>
+<img src="CameraX/Imagenes/02.jpg" alt="drawing" width="300"/>
 
 ## MoviesJetpack
 <img src="MoviesJetPack/1.gif" alt="drawing" width="400"/>
