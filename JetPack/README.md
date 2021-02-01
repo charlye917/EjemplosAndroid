@@ -1,7 +1,7 @@
 # Ejemplos de la libreria de JetPack
 
 ## Camera X
-<img src="NavigationComponent/2.gif" alt="drawing" width="300"/>
+<img src="CameraX/2.gif" alt="drawing" width="300"/>
 
 ## MoviesJetpack
 <img src="MoviesJetPack/01.gif" alt="drawing" width="400"/>
