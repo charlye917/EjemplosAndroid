@@ -3,6 +3,9 @@
 ## Camera X
 <img src="CameraX/Imagenes/01.png" alt="drawing" width="400"/><img src="NavigationComponent/2.gif" alt="drawing" width="300"/>
 
+## MoviesJetpack
+<img src="MovesJetPack/Imagenes/01.png" alt="drawing" width="400"/><img src="NavigationComponent/2.gif" alt="drawing" width="300"/>
+
 ## NavigationComponent
 <img src="NavigationComponent/1.png" alt="drawing" width="400"/><img src="NavigationComponent/2.gif" alt="drawing" width="300"/>
 
