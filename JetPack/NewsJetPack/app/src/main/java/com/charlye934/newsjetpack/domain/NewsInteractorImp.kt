@@ -6,7 +6,7 @@ import com.charlye934.newsjetpack.data.repository.NewsRepository
 import com.charlye934.newsjetpack.util.Resource
 import kotlinx.coroutines.flow.Flow
 
-class InteractorImp(private val newsRepository: NewsRepository ): Interactor {
+class NewsInteractorImp(private val newsRepository: NewsRepository ): NewsInteractor {
     override suspend fun getNewsHeadlines(country: String, page: Int): Resource<ApiResponse> {
         return newsRepository.getNewsHeadlines(country, page)
     }
