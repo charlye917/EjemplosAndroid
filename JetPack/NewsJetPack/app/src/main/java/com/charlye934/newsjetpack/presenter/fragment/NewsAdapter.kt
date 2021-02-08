@@ -1,9 +1,7 @@
 package com.charlye934.newsjetpack.presenter.fragment
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -36,19 +34,32 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
         holder.bind(article)
     }
 
-    override fun getItemCount(): Int = differ.currentList.size
+    override fun getItemCount(): Int {
+        return differ.currentList.size
+    }
 
-    class NewsViewHolder(val binding: NewsListItemBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class NewsViewHolder(private val binding: NewsListItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(article: Article){
-            Log.i("MYTAG","came here ${article.title}")
-            binding.tvTitle.text = article.title
+            binding.tvTitel.text = article.title
             binding.tvDescription.text = article.description
             binding.tvPublishedAt.text = article.publishedAt
             binding.tvSource.text = article.source.name
 
-            Glide.with(binding.ivArticleImage.context).
-            load(article.urlToImage).
-            into(binding.ivArticleImage)
+            Glide.with(binding.ivArticleImage.context)
+                .load(article.urlToImage)
+                .into(binding.ivArticleImage)
+
+            binding.root.setOnClickListener {
+                onItemClickListener?.let {
+                    it(article)
+                }
+            }
         }
+    }
+
+    private var onItemClickListener : ((Article) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Article) -> Unit){
+        onItemClickListener = listener
     }
 }

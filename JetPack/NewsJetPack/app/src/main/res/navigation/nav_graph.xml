@@ -3,13 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/infoFragment">
+    app:startDestination="@id/newsFragment">
 
     <fragment
         android:id="@+id/infoFragment"
         android:name="com.charlye934.newsjetpack.presenter.fragment.InfoFragment"
         android:label="fragment_info"
-        tools:layout="@layout/fragment_info" />
+        tools:layout="@layout/fragment_info" >
+        <argument
+            android:name="selected_article"
+            app:argType="com.charlye934.newsjetpack.data.model.Article" />
+    </fragment>
     <fragment
         android:id="@+id/newsFragment"
         android:name="com.charlye934.newsjetpack.presenter.fragment.NewsFragment"
