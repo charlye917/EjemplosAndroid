@@ -1,11 +1,11 @@
-package com.charlye934.menucomidarealtimedatabase
+package com.charlye934.menucomidarealtimedatabase.util
 
-import java.lang.StringBuilder
+import com.charlye934.menucomidarealtimedatabase.model.Comida
 
-class ComidaContent {
-    private val ITEMS = ArrayList<Comida>()
-    private val ITEM_MAP = HashMap<String, Comida>()
-    private val COUNT = 0
+object ComidaContent {
+    val ITEMS = ArrayList<Comida>()
+    val ITEM_MAP = HashMap<String, Comida>()
+    val COUNT = 0
 
     fun addItem(item: Comida){
         ITEMS.add(item)
