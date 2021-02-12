@@ -1,5 +1,6 @@
 package com.charlye934.menucomidarealtimedatabase.util
 
+import android.util.Log
 import com.charlye934.menucomidarealtimedatabase.model.Comida
 
 object ComidaContent {
@@ -13,6 +14,7 @@ object ComidaContent {
     }
 
     fun updateItem(comida: Comida){
+        Log.d("__TAG items",ITEMS.indexOf(comida.id).toString())
         ITEMS.set(ITEMS.indexOf(comida), comida)
         ITEM_MAP.put(comida.id, comida)
     }

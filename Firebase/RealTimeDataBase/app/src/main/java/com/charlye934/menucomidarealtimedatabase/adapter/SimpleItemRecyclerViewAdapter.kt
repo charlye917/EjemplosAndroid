@@ -21,6 +21,7 @@ class SimpleItemRecyclerViewAdapter : RecyclerView.Adapter<SimpleItemRecyclerVie
     fun setData(comidaList: List<Comida>){
         mValues.clear()
         mValues.addAll(comidaList)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
@@ -40,7 +41,7 @@ class SimpleItemRecyclerViewAdapter : RecyclerView.Adapter<SimpleItemRecyclerVie
 
     inner class FoodViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(comida: Comida, position: Int){
-            view.id_text.text = comida.id
+            view.id_text.text = comida.precio
             view.nombre.text = comida.nombre
             view.btnDelete.setOnClickListener {
                 val database = FirebaseDatabase.getInstance()

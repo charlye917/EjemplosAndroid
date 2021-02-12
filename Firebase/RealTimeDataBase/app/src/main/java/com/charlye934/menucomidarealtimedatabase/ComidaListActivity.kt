@@ -1,6 +1,7 @@
 package com.charlye934.menucomidarealtimedatabase
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -28,6 +29,8 @@ class ComidaListActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     private lateinit var comidaUpdate: Comida
     private lateinit var aaComida: ArrayAdapter<String>
     private val adapterFood = SimpleItemRecyclerViewAdapter()
+    private val database = FirebaseDatabase.getInstance()
+    private val reference = database.getReference(ComonConstants.PATH_FOOD)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +38,7 @@ class ComidaListActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         setUpView()
         onClickListener()
-        setUpRecycerView(comida_list)
+        setUpRecycerView()
     }
 
     private fun setUpView(){
@@ -56,15 +59,10 @@ class ComidaListActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
 
     private fun sendDataFood(){
-        val comida = Comida(
-                nombre = etName.text.toString(),
-                precio = etPrice.text.toString()
-        )
+        val comida = Comida(nombre = etName.text.toString(), precio = etPrice.text.toString())
 
-        if(comida != null){}
-
-        val database = FirebaseDatabase.getInstance()
-        val reference = database.getReference(ComonConstants.PATH_FOOD)
+        if(comida != null){
+        }
 
         reference.push().setValue(comida)
     }
@@ -80,41 +78,39 @@ class ComidaListActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         comidaUpdate = comidas[position]
         etName.setText(comidaUpdate.nombre)
         etPrice.setText(comidaUpdate.precio)
+        Toast.makeText(this, "onItemSelect",Toast.LENGTH_SHORT).show()
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-    private fun setUpRecycerView(recyclerView: RecyclerView){
+    private fun setUpRecycerView(){
 
         comida_list.apply{
             layoutManager = LinearLayoutManager(context)
             adapter = adapterFood
         }
 
-        val database = FirebaseDatabase.getInstance()
-        val reference = database.getReference(ComonConstants.PATH_FOOD)
-
         reference.addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
                 val comida = dataSnapshot.getValue(Comida::class.java)
-                comida!!.id = dataSnapshot.key.toString()
+                comida!!.id = dataSnapshot.key!!
                 if (!ComidaContent.ITEMS.contains(comida)) {
                     ComidaContent.addItem(comida)
                 }
-                adapterFood.setData(ComidaContent.ITEMS)
-                adapterFood.notifyDataSetChanged()
+               adapterFood.setData(ComidaContent.ITEMS)
             }
 
             override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
                 val comida = dataSnapshot.getValue(Comida::class.java)
                 comida!!.id = dataSnapshot.key.toString()
-                if (ComidaContent.ITEMS.contains(comida)) {
-                    ComidaContent.updateItem(comida)
-                }
-                adapterFood.setData(ComidaContent.ITEMS)
 
-                recyclerView.adapter!!.notifyDataSetChanged()
+                Log.d("__TAG",ComidaContent.ITEMS.contains(comida).toString())
+
+                if(ComidaContent.ITEMS.contains(comida))
+                    ComidaContent.updateItem(comida)
+
+                adapterFood.setData(ComidaContent.ITEMS)
             }
 
             override fun onChildRemoved(dataSnapshot: DataSnapshot) {
@@ -124,8 +120,6 @@ class ComidaListActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                     ComidaContent.deleteItem(comida)
                 }
                 adapterFood.setData(ComidaContent.ITEMS)
-
-                recyclerView.adapter!!.notifyDataSetChanged()
             }
 
             override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {
@@ -137,6 +131,4 @@ class ComidaListActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             }
         })
     }
-    }
-
 }
