@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.charlye934.menucomidarealtimedatabase.ComidaListActivity
+import com.charlye934.menucomidarealtimedatabase.firebase.FunctionFirebase
+import com.charlye934.menucomidarealtimedatabase.firebase.FunctionsFirebaseImp
 import com.charlye934.menucomidarealtimedatabase.model.Comida
 import com.charlye934.menucomidarealtimedatabase.util.ComonConstants
 import com.example.menucomidarealtimedatabase.R
@@ -15,6 +17,7 @@ import kotlinx.android.synthetic.main.comida_list_content.view.*
 class SimpleItemRecyclerViewAdapter : RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.FoodViewHolder>() {
 
     private lateinit var mParentActivity: ComidaListActivity
+    private val firebase: FunctionFirebase = FunctionsFirebaseImp()
     private var mValues = ArrayList<Comida>()
     private var mTwoPane: Boolean = false
 
@@ -44,9 +47,7 @@ class SimpleItemRecyclerViewAdapter : RecyclerView.Adapter<SimpleItemRecyclerVie
             view.id_text.text = comida.precio
             view.nombre.text = comida.nombre
             view.btnDelete.setOnClickListener {
-                val database = FirebaseDatabase.getInstance()
-                val reference = database.getReference(ComonConstants.PATH_FOOD)
-                reference.child(mValues[position].id).removeValue()
+               firebase.deleteFirebase(mValues[position])
             }
         }
     }

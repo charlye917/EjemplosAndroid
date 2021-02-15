@@ -14,9 +14,10 @@ object ComidaContent {
     }
 
     fun updateItem(comida: Comida){
-        Log.d("__TAG items",ITEMS.indexOf(comida.id).toString())
-        ITEMS.set(ITEMS.indexOf(comida), comida)
-        ITEM_MAP.put(comida.id, comida)
+        ITEM_MAP[comida.id] = comida
+        ITEMS.clear()
+        ITEMS.addAll(ITEM_MAP.values)
+        Log.d("__TAG UPDATE", ITEM_MAP.values.toString())
     }
 
     fun deleteItem(comida: Comida){
