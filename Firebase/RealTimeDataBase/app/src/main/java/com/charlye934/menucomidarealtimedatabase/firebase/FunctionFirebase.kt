@@ -10,5 +10,4 @@ interface FunctionFirebase {
     fun deleteFirebase(comida: Comida)
     fun setUpRecycerView(context: Context, adapter: SimpleItemRecyclerViewAdapter)
     fun singleValueEvent(context: Context, textView: TextView)
-    fun updateFirebase(comida:Comida)
 }

@@ -21,13 +21,6 @@ class FunctionsFirebaseImp : FunctionFirebase{
         reference.child(comida.id).removeValue()
     }
 
-    override fun updateFirebase(comida: Comida) {
-        if(comida != null){
-            reference.child(comida.id).setValue(comida)
-        }
-    }
-
-
     override fun singleValueEvent(context: Context, textView: TextView) {
         referencesCode.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
