@@ -112,7 +112,5 @@ class FcmMessagingService : FirebaseMessagingService() {
                 }
             )
         }
-
-
     }
 }
