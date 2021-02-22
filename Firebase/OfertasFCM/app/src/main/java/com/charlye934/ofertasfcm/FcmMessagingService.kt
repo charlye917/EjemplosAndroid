@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -24,14 +25,14 @@ class FcmMessagingService : FirebaseMessagingService() {
         if(remoteMessage.data != null && remoteMessage.notification != null){
             sendNotification(remoteMessage)
         }else{
-            //sendEmptyNotification()
+            sendEmptyNotification()
         }
     }
 
     @SuppressLint("ResourceAsColor")
     private fun sendNotification(remoteMessage: RemoteMessage) {
         val descStr = remoteMessage.data.get(DESCUENTO)
-        val desc = (descStr ?: "0") as Float
+        val desc = ((descStr ?: 0.0) as Float)
 
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(DESCUENTO, desc)
@@ -60,10 +61,12 @@ class FcmMessagingService : FirebaseMessagingService() {
                     else
                         ContextCompat.getColor(applicationContext, R.color.design_default_color_primary_variant)
                 )
+
+                notificationBuilder.setPriority(Notification.PRIORITY_MAX)
             }
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                val channelId = if(desc > .10) getString(R.string.low_channel_id) else getString(R.string.normal_channel_id)
+                val channelId = if(desc < .10) getString(R.string.low_channel_id) else getString(R.string.normal_channel_id)
                 val channelName = if(desc < .10) getString(R.string.low_channel_name) else getString(R.string.normal_channel_name)
                 val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
 
@@ -104,13 +107,34 @@ class FcmMessagingService : FirebaseMessagingService() {
             .setContentIntent(pendingIntent)
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            notificationBuilder.setColor(
-                if(desc > .4){
-                    ContextCompat.getColor(applicationContext, R.color.design_default_color_primary)
-                }else{
-                    ContextCompat.getColor(applicationContext, R.color.design_default_color_secondary)
-                }
-            )
+            notificationBuilder.setColor(ContextCompat.getColor(applicationContext, R.color.design_default_color_primary))
+            notificationBuilder.setPriority(Notification.PRIORITY_MAX)
         }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channleId = getString(R.string.normal_channel_id)
+            val channelName = getString(R.string.normal_channel_name)
+            val channel = NotificationChannel(channleId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
+
+            channel.enableVibration(true)
+            channel.vibrationPattern = longArrayOf(100, 200, 200, 50)
+            if(notificationManager != null){
+                notificationManager.createNotificationChannel(channel)
+            }
+            notificationBuilder.setChannelId(channleId)
+        }
+
+        if(notificationManager != null){
+            notificationManager.notify("", 0, notificationBuilder.build())
+        }
+    }
+
+    override fun onNewToken(p0: String) {
+        super.onNewToken(p0)
+        sendRegistrationToServer(p0)
+    }
+
+    private fun sendRegistrationToServer(token: String) {
+        Log.d("newToken", token)
     }
 }
