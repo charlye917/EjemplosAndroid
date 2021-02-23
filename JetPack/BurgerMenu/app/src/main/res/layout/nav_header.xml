@@ -6,7 +6,7 @@
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@android:color/holo_blue_bright">
+    android:background="@drawable/header">
 
     <TextView
         android:id="@+id/textViewName"
