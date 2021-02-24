@@ -2,6 +2,7 @@ package com.charlye934.burgermenu.toolbar
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.charlye934.burgermenu.R
 
 
 open class ToolbarActivity: AppCompatActivity(), IToolbar {
@@ -10,7 +11,9 @@ open class ToolbarActivity: AppCompatActivity(), IToolbar {
 
     override fun toolbarToLoad(toolbar: Toolbar?) {
         _toolbar = toolbar
-        _toolbar?:let { setSupportActionBar(_toolbar) }
+        _toolbar?:let {
+            setSupportActionBar(_toolbar)
+        }
     }
 
     override fun enableHomeDisplay(value: Boolean) {

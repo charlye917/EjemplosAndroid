@@ -26,8 +26,10 @@ class MainActivity : ToolbarActivity(), NavigationView.OnNavigationItemSelectedL
         setNavDrawer()
         setUserHeaderInformation()
 
-        fragmentTransaction(HomeFragment())
-        navView.menu.getItem(0).isChecked = true
+        if(savedInstanceState == null) {
+            fragmentTransaction(HomeFragment())
+            navView.menu.getItem(0).isChecked = true
+        }
     }
 
     private fun setNavDrawer(){
