@@ -42,29 +42,36 @@
             android:textColorHint="@android:color/white"
             android:textSize="@dimen/login_text_size" />
 
-        <EditText
-            android:id="@+id/editTextPasswordSignUp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutPassword"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/login_edit_text_height"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/editTextEmailSignUp"
             android:layout_alignStart="@+id/editTextEmailSignUp"
             android:layout_alignEnd="@+id/editTextEmailSignUp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/edittext_rounded"
-            android:hint="@string/login_password"
-            android:inputType="textPassword"
-            android:paddingLeft="@dimen/login_edit_text_space"
-            android:paddingRight="@dimen/login_edit_text_space"
-            android:textColorHint="@android:color/white"
-            android:textSize="@dimen/login_text_size" />
+            app:endIconMode="password_toggle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPasswordSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_edit_text_height"
+                android:layout_marginTop="16dp"
+                android:hint="@string/login_password"
+                android:inputType="textPassword"
+                android:background="@drawable/edittext_rounded"
+                android:paddingLeft="@dimen/login_edit_text_space"
+                android:paddingRight="@dimen/login_edit_text_space"
+                android:textColorHint="@android:color/white"
+                android:textSize="@dimen/login_text_size" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <EditText
             android:id="@+id/editTextConfirmPasswordSignUp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_edit_text_height"
-            android:layout_below="@+id/editTextPasswordSignUp"
-            android:layout_alignStart="@+id/editTextPasswordSignUp"
-            android:layout_alignEnd="@+id/editTextPasswordSignUp"
+            android:layout_below="@+id/textInputLayoutPassword"
+            android:layout_alignStart="@+id/textInputLayoutPassword"
+            android:layout_alignEnd="@+id/textInputLayoutPassword"
             android:layout_marginTop="16dp"
             android:background="@drawable/edittext_rounded"
             android:hint="@string/login_confirm_password"
