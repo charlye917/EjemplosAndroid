@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:fillViewport="true"
-    tools:context=".LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -93,7 +93,7 @@
             android:textColor="@color/colorPrimaryText" />
 
         <Button
-            android:id="@+id/buttonLoginGoSignUp"
+            android:id="@+id/buttonCreateAccount"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_button_xl_height"
             android:layout_below="@+id/buttonLoginGoogle"
@@ -107,8 +107,8 @@
             android:id="@+id/textViewForgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/buttonLoginGoSignUp"
-            android:layout_alignStart="@+id/buttonLoginGoSignUp"
+            android:layout_below="@+id/buttonCreateAccount"
+            android:layout_alignStart="@+id/buttonCreateAccount"
             android:layout_alignParentEnd="true"
             android:gravity="center"
             android:text="@string/login_forgot_password"
