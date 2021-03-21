@@ -1,4 +1,23 @@
 <resources>
     <string name="app_name">GraficsTest</string>
     <string name="dash">-</string>
+    <string name="viewGithub">GITHUB</string>
+    <string name="actionToggleYValues">TOGGLEVALUES</string>
+    <string name="actionToggleXValues">TOGGLEXVALUES</string>
+    <string name="actionToggleIcons">TOGGLEICONS</string>
+    <string name="actionTogglePercent">TOOGLEPERCENT</string>
+    <string name="actionToggleMinAngles">TOGGLEMINANGLES</string>
+    <string name="actionToggleHole">TOGGLEHOLE</string>
+    <string name="actionToggleCurvedSlices">TOGGLECURVEDSLICES</string>
+    <string name="actionDrawCenterText">DRAWCENTER</string>
+    <string name="actionToggleSpin">TOGGLESPIN</string>
+    <string name="animateX">ANIMATEX</string>
+    <string name="animateY">ANIMATEY</string>
+    <string name="animateXY">ANIMATEXY</string>
+    <string name="actionSave">ACTIONSAVE</string>
+    <string name="actionToggleBarBorders">ToggleBorders</string>
+    <string name="actionToggleValues">ToggleValues</string>
+    <string name="actionToggleHighlight">ToggleHighlight</string>
+    <string name="actionTogglePinch">TogglePinch</string>
+    <string name="actionToggleAutoScale">ToggleAutoScael</string>
 </resources>

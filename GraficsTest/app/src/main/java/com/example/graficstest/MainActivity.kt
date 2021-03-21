@@ -41,7 +41,7 @@ import java.util.*
 class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener, OnChartValueSelectedListener {
 
 
-    protected val parties = arrayOf(
+    val parties = arrayOf(
             "Party A", "Party B", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H",
             "Party I", "Party J", "Party K", "Party L", "Party M", "Party N", "Party O", "Party P",
             "Party Q", "Party R", "Party S", "Party T", "Party U", "Party V", "Party W", "Party X",
@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener, OnCha
                 chart!!.invalidate()
             }
             R.id.actionToggleHole -> {
-                if (chart!!.isDrawHoleEnabled) chart!!.isDrawHoleEnabled = false else chart!!.isDrawHoleEnabled = true
+                chart!!.isDrawHoleEnabled = !chart!!.isDrawHoleEnabled
                 chart!!.invalidate()
             }
             R.id.actionToggleMinAngles -> {
@@ -203,26 +203,19 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener, OnCha
             R.id.actionToggleSpin -> {
                 chart!!.spin(1000, chart!!.rotationAngle, chart!!.rotationAngle + 360, Easing.EaseInOutCubic)
             }
-            R.id.actionSave -> {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    saveToGallery()
-                } else {
-                    //requestStoragePermission(chart)
-                }
-            }
         }
         return true
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         tvXMax!!.text = seekBarX!!.progress.toString()
-        tvYMax.setText(seekBarY.getProgress().toString())
-        setData(seekBarX!!.progress, seekBarY.getProgress().toFloat())
+        tvYMax.text = seekBarY.progress.toString()
+        setData(seekBarX!!.progress, seekBarY.progress.toFloat())
     }
 
-    protected fun saveToGallery() {
+    /*protected fun saveToGallery() {
         saveToGallery(chart, "PieChartActivity")
-    }
+    }*/
 
     private fun generateCenterSpannableText(): SpannableString? {
         val s = SpannableString("MPAndroidChart\ndeveloped by Philipp Jahoda")
@@ -247,8 +240,5 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener, OnCha
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-
     override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-
-
 }
