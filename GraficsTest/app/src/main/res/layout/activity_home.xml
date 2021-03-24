@@ -22,4 +22,11 @@
         android:text="GRAFICA BARRAS"
         android:layout_margin="30dp"/>
 
+    <Button
+        android:id="@+id/btnViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Pager"
+        android:layout_margin="30dp"/>
+
 </LinearLayout>

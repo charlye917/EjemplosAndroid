@@ -11,12 +11,17 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         btnCircular.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, CircleActivity::class.java)
             startActivity(intent)
         }
 
         btnBarras.setOnClickListener {
             val intent = Intent(this, BarActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnViewPager.setOnClickListener {
+            val intent = Intent(this, ViewPagerActivity::class.java)
             startActivity(intent)
         }
     }

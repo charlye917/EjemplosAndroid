@@ -38,7 +38,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
-class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener, OnChartValueSelectedListener {
+class CircleActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener, OnChartValueSelectedListener {
 
 
     val parties = arrayOf(
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener, OnCha
         // the chart.
         for (i in 0 until count) {
             entries.add(PieEntry((Math.random() * range + range / 5).toFloat(),
-                    parties.get(i % parties.size),
+                    //parties.get(i % parties.size),
                     resources.getDrawable(R.drawable.star)))
         }
         val dataSet = PieDataSet(entries, "Election Results")
@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener, OnCha
         for (c: Int in ColorTemplate.PASTEL_COLORS) colors.add(c)
         colors.add(ColorTemplate.getHoloBlue())
         dataSet.colors = colors
-        //dataSet.setSelectionShift(0f);
+        dataSet.setSelectionShift(0f);
         val data = PieData(dataSet)
         data.setValueFormatter(PercentFormatter())
         data.setValueTextSize(11f)
@@ -212,10 +212,6 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener, OnCha
         tvYMax.text = seekBarY.progress.toString()
         setData(seekBarX!!.progress, seekBarY.progress.toFloat())
     }
-
-    /*protected fun saveToGallery() {
-        saveToGallery(chart, "PieChartActivity")
-    }*/
 
     private fun generateCenterSpannableText(): SpannableString? {
         val s = SpannableString("MPAndroidChart\ndeveloped by Philipp Jahoda")

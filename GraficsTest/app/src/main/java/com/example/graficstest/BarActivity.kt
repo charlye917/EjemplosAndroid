@@ -12,6 +12,8 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginLeft
+import androidx.core.view.marginRight
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -34,7 +36,7 @@ class BarActivity : AppCompatActivity(), OnSeekBarChangeListener {
 
         seekBarX.setOnSeekBarChangeListener(this)
         seekBarY.setOnSeekBarChangeListener(this)
-        //chartConfig()
+//        chartConfig()
 
         seekBarX.progress = 10
         seekBarY.progress = 100
@@ -79,6 +81,8 @@ class BarActivity : AppCompatActivity(), OnSeekBarChangeListener {
             val `val` = (Math.random() * multi).toFloat() + multi / 3
             values.add(BarEntry(i.toFloat(), `val`))
         }
+
+
         val set1: BarDataSet
         if (chart!!.data != null && chart!!.data.dataSetCount > 0) {
             set1 = chart!!.data.getDataSetByIndex(0) as BarDataSet
@@ -92,6 +96,9 @@ class BarActivity : AppCompatActivity(), OnSeekBarChangeListener {
             val dataSets = ArrayList<IBarDataSet>()
             dataSets.add(set1)
             val data = BarData(dataSets)
+            chart.marginRight
+            chart.marginLeft
+            chart.setPadding(50,50,50,50)
             chart!!.data = data
             chart!!.setFitBars(true)
         }
