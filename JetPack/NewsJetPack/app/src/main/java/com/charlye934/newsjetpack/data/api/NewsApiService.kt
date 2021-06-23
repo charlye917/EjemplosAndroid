@@ -1,6 +1,7 @@
 package com.charlye934.newsjetpack.data.api
 
 import com.charlye934.newsjetpa.BuildConfig
+import com.charlye934.newsjetpa.BuildConfig.API_KEY
 import com.charlye934.newsjetpack.data.model.ApiResponse
 import retrofit2.Response
 import retrofit2.http.GET
